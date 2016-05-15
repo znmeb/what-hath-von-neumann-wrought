@@ -7,8 +7,14 @@ We program today in a rich environment:
 * integrated development environments, and
 * documentation tools.
 
-We celebrate the pioneers of programming languages: [Grace Hopper](https://en.wikipedia.org/wiki/Grace_Hopper) ([COBOL](https://en.wikipedia.org/wiki/COBOL)), [John Backus](https://en.wikipedia.org/wiki/John_Backus) ([FORTRAN](https://en.wikipedia.org/wiki/Fortran)), [John McCarthy](https://en.wikipedia.org/wiki/John_McCarthy_(computer_scientist)) ([LISP](https://en.wikipedia.org/wiki/Lisp_(programming_language))), Kenneth Iverson (APL), Peter Naur (ALGOL) and many others. But how did people program before programming languages?
+We celebrate the pioneers of programming languages: 
+[Grace Hopper](https://en.wikipedia.org/wiki/Grace_Hopper) ([COBOL](https://en.wikipedia.org/wiki/COBOL)), 
+[John Backus](https://en.wikipedia.org/wiki/John_Backus) ([FORTRAN](https://en.wikipedia.org/wiki/Fortran)), 
+[John McCarthy](https://en.wikipedia.org/wiki/John_McCarthy_(computer_scientist)) ([LISP](https://en.wikipedia.org/wiki/Lisp_(programming_language))), 
+[Kenneth Iverson](https://en.wikipedia.org/wiki/Kenneth_E._Iverson) ([APL](https://en.wikipedia.org/wiki/APL_(programming_language))), 
+[Peter Naur](https://en.wikipedia.org/wiki/Peter_Naur) ([ALGOL](https://en.wikipedia.org/wiki/ALGOL)) and many others. But how did people program before programming languages?
 
-I’m going to take you back to that time – specifically, to the Von Neumann machine. I’ll tell you a little bit about Von Neumann himself, and then describe the Von Neumann machine and its language.
+I’m going to take you back to that time – specifically, to the [Von Neumann machine](https://en.wikipedia.org/wiki/Von_Neumann_architecture). 
+I’ll tell you a little bit about [Von Neumann](https://en.wikipedia.org/wiki/John_von_Neumann) himself, and then describe the Von Neumann machine and its language.
 
 The Von Neumann architecture is both phenomenally simple and profoundly revolutionary. Because it’s so simple, it’s easy to build an emulator. With that emulator, I’ll show you how to write a simple program on a Von Neumann machine.
