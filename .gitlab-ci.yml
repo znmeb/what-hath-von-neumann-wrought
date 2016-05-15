@@ -1,0 +1,6 @@
+pages:
+  script:
+  - ls -altr > files.log
+  artifacts:
+    paths:
+    - public
