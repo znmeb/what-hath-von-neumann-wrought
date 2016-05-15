@@ -1,5 +1,4 @@
 We program today in a rich environment:
-
     * numerous abstract programming paradigms,
     * elegant realizations of those paradigms in programming languages,
     * well-crafted run-times, interpreters and compilers,
