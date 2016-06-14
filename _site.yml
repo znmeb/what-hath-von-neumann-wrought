@@ -2,8 +2,6 @@ name: "what-hath-von-neumann-wrought"
 navbar:
   title: "What Hath Von Neumann Wrought?"
   left:
-    - text: "Random Access Memory"
-      href: ram.html
     - text: "The Arithmetic Unit"
       href: arithmetic.html
     - text: "The Control Unit"

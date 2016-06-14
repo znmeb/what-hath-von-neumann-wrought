@@ -12,14 +12,22 @@ library(flexdashboard)
 ### Frame 1
 
 ```{r}
+# draw the arithmetic unit
+
 ```
 
 ### Frame 2
 
 ```{r}
+# emulate an addition
+# emulate a subtraction
+# emulate a left shift
+# emulate a right shift
 ```
 
 ### Frame 3
 
 ```{r}
+# emulate a multiply
+# emulate a divide
 ```
