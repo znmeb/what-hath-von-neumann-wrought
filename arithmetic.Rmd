@@ -6,7 +6,14 @@ output:
 ---
 
 ```{r setup, include=FALSE}
+# libraries
 library(flexdashboard)
+library(DiagrammeR)
+library(magrittr)
+
+# constants
+nbitsw <- 40 # number of bits in a word
+
 ```
 
 ### Frame 1

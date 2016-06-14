@@ -2,7 +2,12 @@
 title: "What Hath Von Neumann Wrought?"
 author: "M. Edward (Ed) Borasky <znmeb@znmeb.net>"
 date: "`r Sys.Date()`"
-output: html_document
+output:
+  html_document:
+    theme: default
+    template: _hentry.html
+    include:
+      after_body: ["search.html", "indieweb.html", "license.html"]
 ---
 We program today in a rich environment:
 
