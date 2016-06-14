@@ -1,22 +1,23 @@
 ---
-title: "The Arithmetic Unit"
-output: 
-  flexdashboard::flex_dashboard:
-    vertical_layout: scroll
+title: "What Hath Von Neumann Wrought?"
+author: "M. Edward (Ed) Borasky"
+output: revealjs::revealjs_presentation
 ---
+# Initialization
 
-```{r setup, include=FALSE}
-# libraries
-library(flexdashboard)
+## Libraries
+```{r}
 library(DiagrammeR)
 library(magrittr)
-
-# constants
+```
+## Constants
+```{r}
 nbitsw <- 40 # number of bits in a word
-
 ```
 
-### The "A" register (accumulator)
+# Arithmetic Unit Registers
+
+## The "A" register (accumulator)
 
 ```{r}
 aregister <- create_nodes(
@@ -25,7 +26,7 @@ aregister <- create_nodes(
 render_graph(create_graph(aregister))
 ```
 
-### The "Q" register (multiplier - quotient)
+## The "Q" register (multiplier - quotient)
 ```{r}
 qregister <- create_nodes(
   paste("q", seq(0, nbitsw - 1), sep = ""), 
@@ -33,7 +34,7 @@ qregister <- create_nodes(
 render_graph(create_graph(qregister))
 ```
 
-### The "R3" register (memory result)
+## The "R3" register (memory result)
 ```{r}
 rregister <- create_nodes(
   paste("r", seq(0, nbitsw - 1), sep = ""), 

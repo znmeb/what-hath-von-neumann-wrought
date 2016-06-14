@@ -2,7 +2,5 @@ name: "what-hath-von-neumann-wrought"
 navbar:
   title: "What Hath Von Neumann Wrought?"
   left:
-    - text: "The Arithmetic Unit"
-      href: arithmetic.html
-    - text: "The Control Unit"
-      href: control.html
+    - text: "Slides"
+      href: slides.html
