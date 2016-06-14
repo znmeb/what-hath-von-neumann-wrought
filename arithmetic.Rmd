@@ -2,7 +2,7 @@
 title: "The Arithmetic Unit"
 output: 
   flexdashboard::flex_dashboard:
-    storyboard: true
+    vertical_layout: scroll
 ---
 
 ```{r setup, include=FALSE}
@@ -16,25 +16,27 @@ nbitsw <- 40 # number of bits in a word
 
 ```
 
-### Frame 1
+### The "A" register (accumulator)
 
 ```{r}
-# draw the arithmetic unit
-
+aregister <- create_nodes(
+  paste("a", seq(0, nbitsw - 1), sep = ""), 
+  shape = "box", height = 1.618, width = 1.0)
+render_graph(create_graph(aregister))
 ```
 
-### Frame 2
-
+### The "Q" register (multiplier - quotient)
 ```{r}
-# emulate an addition
-# emulate a subtraction
-# emulate a left shift
-# emulate a right shift
+qregister <- create_nodes(
+  paste("q", seq(0, nbitsw - 1), sep = ""), 
+  shape = "box", height = 1.618, width = 1.0)
+render_graph(create_graph(qregister))
 ```
 
-### Frame 3
-
+### The "R3" register (memory result)
 ```{r}
-# emulate a multiply
-# emulate a divide
+rregister <- create_nodes(
+  paste("r", seq(0, nbitsw - 1), sep = ""), 
+  shape = "box", height = 1.618, width = 1.0)
+render_graph(create_graph(rregister))
 ```
