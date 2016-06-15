@@ -2,5 +2,6 @@
 
 export(hex_digits)
 export(illiac_add)
+export(illiac_aq)
 export(illiac_word)
 export(order_code_table)

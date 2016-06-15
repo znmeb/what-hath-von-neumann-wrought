@@ -49,8 +49,25 @@ hex_digits <- function() {
 #' quotient <- illiac_word()
 
 illiac_word <- function() {
-  result <- vector(mode = "integer", length = 40)
+  result <- vector(mode = "logical", length = 40)
   names(result) <- paste("w", seq(0, 39), sep = "")
+  return(result)
+}
+
+#' @title ILLIAC AQ Doubleword
+#' @name illiac_aq
+#' @description The ILLIAC arithmetic unit had two main 40-bit registers, A (for
+#' accumulator) and Q (for quotient). So we create an 80-element vector.
+#' @export illiac_aq
+#' @return an 80-element vector with named elements
+#'
+#' @examples
+#' aq <- illiac_aq()
+
+illiac_aq <- function() {
+  result <- vector(mode = "logical", length = 80)
+  names(result)[1:40] <- paste("a", seq(0, 39), sep = "")
+  names(result)[41:80] <- paste("q", seq(0, 39), sep = "")
   return(result)
 }
 
