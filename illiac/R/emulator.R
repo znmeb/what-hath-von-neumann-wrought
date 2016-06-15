@@ -86,6 +86,47 @@ illiac_aq <- function() {
   return(result)
 }
 
+#' @title ILLIAC AQ Right Shift one place
+#' @name illiac_aq_rshift
+#' @description An ILLIAC right shift
+#' @param illiac_aq the number (sign and 78 fraction bits) to be shifted
+#' @export illiac_aq_rshift
+#' @return the one-place-right-shift of illiac_aq
+#'
+#' @examples
+#' aq <- illiac_aq()
+#' shift <- illiac_aq_rshift(aq)
+
+illiac_aq_rshift <- function(illiac_aq) {
+  N <- illiac_word_length()
+  result <- illiac_aq
+  result[(N + 3):(2 * N)] <- result[(N + 2):(2 * N - 1)]
+  result[N + 2] <- result[N]
+  result[2:N] <- result[1:(N - 1)]
+  return(result)
+}
+
+#' @title ILLIAC AQ Left Shift one place
+#' @name illiac_aq_lshift
+#' @description An ILLIAC left shift
+#' @param illiac_aq the number (sign and 78 fraction bits) to be shifted
+#' @export illiac_aq_lshift
+#' @return the one-place-left-shift of illiac_aq
+#'
+#' @examples
+#' aq <- illiac_aq()
+#' shift <- illiac_aq_lshift(aq)
+
+illiac_aq_lshift <- function(illiac_aq) {
+  N <- illiac_word_length()
+  result <- illiac_aq
+  result[1:(N - 1)] <- result[2:N]
+  result[N] <- result[N + 2]
+  result[(N + 2):(2 * N - 1)] <- result[(N + 3):(2 * N)]
+  result[(2 * N)] <- FALSE
+  return(result)
+}
+
 #' @title ILLIAC Add
 #' @name illiac_add
 #' @description ILLIAC addition is a straightforward binary addition of
