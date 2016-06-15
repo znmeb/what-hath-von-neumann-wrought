@@ -53,3 +53,15 @@ illiac_word <- function() {
   names(result) <- paste("w", seq(0, 39), sep = "")
   return(result)
 }
+
+#' @title ILLIAC Add
+#' @name illiac_add
+#' @description ILLIAC addition is a straightforward binary addition of
+#' two's-complement numbers.
+#' @export illiac_add
+#' @param augend the number to be augmented
+#' @param addend the number to be added to the augend
+#' @return the sum of the augend and the addend
+
+illiac_add <- function(augend, addend) {
+}
