@@ -32,6 +32,19 @@ hex_digits <- function() {
            "8", "9", "K", "S", "N", "J", "F", "L"))
 }
 
+#' @title ILLIAC Word Length
+#' @name illiac_word_length
+#' @description Number of bits in an ILLIAC word - 40
+#' @export illiac_word_length
+#' @return the length of an ILLIAC word (40 bits)
+#'
+#' @examples
+#' N <- illiac_word_length()
+
+illiac_word_length <- function() {
+  return(40)
+}
+
 #' @title ILLIAC word
 #' @name illiac_word
 #' @description ILLIAC used a 40-bit word. There are numerous ways we could deal
@@ -49,8 +62,9 @@ hex_digits <- function() {
 #' quotient <- illiac_word()
 
 illiac_word <- function() {
-  result <- vector(mode = "logical", length = 40)
-  names(result) <- paste("w", seq(0, 39), sep = "")
+  N <- illiac_word_length()
+  result <- vector(mode = "logical", length = N)
+  names(result) <- paste("w", seq(0, N - 1), sep = "")
   return(result)
 }
 
@@ -65,9 +79,10 @@ illiac_word <- function() {
 #' aq <- illiac_aq()
 
 illiac_aq <- function() {
-  result <- vector(mode = "logical", length = 80)
-  names(result)[1:40] <- paste("a", seq(0, 39), sep = "")
-  names(result)[41:80] <- paste("q", seq(0, 39), sep = "")
+  N <- illiac_word_length()
+  result <- vector(mode = "logical", length = N * 2)
+  names(result)[1:N] <- paste("a", seq(0, N - 1), sep = "")
+  names(result)[(N + 1):(2 * N)] <- paste("q", seq(0, N - 1), sep = "")
   return(result)
 }
 
