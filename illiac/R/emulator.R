@@ -138,3 +138,45 @@ illiac_aq_lshift <- function(illiac_aq) {
 
 illiac_add <- function(augend, addend) {
 }
+
+#' @title ILLIAC Start
+#' @name illiac_start
+#' @description The emulator itself -given an address, left/right start position
+#' and memory state, emulates the machine until it stops. Yes, if you give it an
+#' unending loop that's what it will do, as would the system it's emulating.
+#'
+#' When it stops, you get a list with what you need to start it again and the
+#' contents of memory when it stopped. You also get a decent stop message.
+#' @export illiac_start
+#' @param program_counter the address at which to start
+#' @param right_hand FALSE: left-hand order, TRUE: right-hand order
+#' @param aq the contents of the AQ register
+#' @param memory the state of the memory at start time
+#' @return a list containing
+#' \itemize{
+#' \item program_counter the address to restart
+#' \item right_hand FALSE: restart at left-hand order,
+#' TRUE: restart at right-hand order
+#' \item aq the contents of the AQ register at stop time
+#' \item memory the state of the memory when it stopped
+#' \item reason for stop (character)}
+
+illiac_start <- function(program_counter, right_hand, aq, memory) {
+  N <- illiac_word_length()
+  pc <- program_counter
+  rh <- right_hand
+  AQ <- aq
+  RAM <- memory
+  running <- TRUE
+  while (running) {
+    inst_reg <- RAM(pc - 1)
+    if (rh) {
+      order <- inst_reg * order_shift
+    } else {
+      order <- inst_reg & lhmask
+    }
+  opcode <- (order / op_shift) & op_mask
+  address <- order & address_mask
+  step_list <- illiac_execute()
+  }
+}
