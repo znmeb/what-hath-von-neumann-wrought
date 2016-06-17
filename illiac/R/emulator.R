@@ -180,3 +180,19 @@ illiac_start <- function(program_counter, right_hand, aq, memory) {
   step_list <- illiac_execute()
   }
 }
+#' @title Create Memory
+#' @name create_memory
+#' @description create a boolean matrix representing a computer memory. The rows
+#' are words (addressable entities) and the columns are bits.
+#' @export create_memory
+#' @param num_words number of rows (words, bytes, etc.)
+#' @param num_bits number of bits in a word
+#' @return a num_words by num_bits array filled with FALSE
+
+create_memory <- function(num_words, num_bits) {
+  words <- paste("w", seq(0, num_words - 1), sep = "")
+  bits <- paste("b", seq(0, num_bits - 1), sep = "")
+  memory <- array(
+    FALSE, dim = c(length(words), length(bits)), dimnames = list(words, bits))
+  return(memory)
+}
