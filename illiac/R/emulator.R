@@ -81,15 +81,16 @@ create_memory <- function(num_words = .words, num_bits = .bits) {
 }
 
 #' @export display_memory
-display_memory <- function(memory) {
-  address <- seq(0, length(memory) - 1)
-  integer <- sapply(memory, decode_integer)
-  fraction <- sapply(memory, decode_fraction)
-  left_order <- .format_order(sapply(memory, .decode_left_order))
-  left_address <- sapply(memory, .decode_left_address)
-  right_order <- .format_order(sapply(memory, .decode_right_order))
-  right_address <- sapply(memory, .decode_right_address)
-
-  return(as.data.frame(cbind(
-    address, integer, fraction, left_order, left_address, right_order, right_address)))
+display_memory <- function(a, q, memory) {
+  memx <- c(list(a), list(q), memory)
+  address <- c("a", "q", as.character(seq(0, length(memory) - 1)))
+  integer <- sapply(memx, decode_integer)
+  fraction <- sapply(memx, decode_fraction)
+  left_order <- .format_order(sapply(memx, .decode_left_order))
+  left_address <- sapply(memx, .decode_left_address)
+  right_order <- .format_order(sapply(memx, .decode_right_order))
+  right_address <- sapply(memx, .decode_right_address)
+  result <- as.data.frame(cbind(
+    address, integer, fraction, left_order, left_address, right_order, right_address))
+  return(result)
 }
