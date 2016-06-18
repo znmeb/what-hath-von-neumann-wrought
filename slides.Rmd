@@ -3,41 +3,135 @@ title: "What Hath Von Neumann Wrought?"
 author: "M. Edward (Ed) Borasky"
 output: revealjs::revealjs_presentation
 ---
-# Initialization
+# Motivation
 
-## Libraries
-```{r}
-library(DiagrammeR)
-library(magrittr)
-```
-## Constants
-```{r}
-nbitsw <- 40 # number of bits in a word
-```
+## Standing on the shoulders of giants
 
-# Arithmetic Unit Registers
+## Born with Curiosity
 
-## The "A" register (accumulator)
+## This was done with a slide rule
 
-```{r}
-aregister <- create_nodes(
-  paste("a", seq(0, nbitsw - 1), sep = ""), 
-  shape = "box", height = 1.618, width = 1.0)
-render_graph(create_graph(aregister))
-```
+## Archive.org and bitsavers
 
-## The "Q" register (multiplier - quotient)
-```{r}
-qregister <- create_nodes(
-  paste("q", seq(0, nbitsw - 1), sep = ""), 
-  shape = "box", height = 1.618, width = 1.0)
-render_graph(create_graph(qregister))
-```
+## The world of Grace Hopper
 
-## The "R3" register (memory result)
-```{r}
-rregister <- create_nodes(
-  paste("r", seq(0, nbitsw - 1), sep = ""), 
-  shape = "box", height = 1.618, width = 1.0)
-render_graph(create_graph(rregister))
-```
+## The Harvard Mark I
+
+## What was your first computer?
+
+## Did you learn assembler?
+
+## Did you learn machine code?
+
+# John von Neumann
+
+## In Europe
+
+## The Manhattan Project
+
+## Game Theory
+
+## Self-reproducing systems / cellular automata
+
+## Applied Mathematics
+
+## Bureaucrat
+
+## Death
+
+# The IAS Machines
+
+## State of scientific computing
+
+## Preliminary discussions
+
+## Planning and coding
+
+## Hardware
+
+### MANIAC
+
+### JOHNNIAC
+
+### ILLIAC and copies
+
+### IBM 701
+
+### Univac 1100
+
+## Evolution of scientific computers
+
+### IBM 704
+
+### IBM 709
+
+### IBM 7090 / 7094
+
+### IBM 7030
+
+### UNIVAC 1100 series
+
+### CDC 1604
+
+### CDC 6600
+
+### Cray 1
+
+## Evolution of scientific programming languages
+
+### Fortran
+
+### Algol
+
+### Lisp
+
+### APL
+
+### S
+
+### Matlab
+
+### R
+
+### Julia
+
+## The architecture
+
+### Arithmentic unit
+
+### Memory
+
+### Control
+
+### Input / Output
+
+# The software engineering process
+
+## Algorithms
+
+### Calculus / differential equations
+
+### Statistics / Monte Carlo
+
+### Linear algebra / linear equations / eigensystems
+
+## Memory layout
+
+## Assembler / loader
+
+## Run
+
+## Debugging / post-mortem
+
+# The emulator
+
+## Existing emulators
+
+### simh
+
+### SILLIAC
+
+### others
+
+## Why build a new one?
+
