@@ -4,18 +4,17 @@
 \alias{create_memory}
 \title{Create Memory}
 \usage{
-create_memory(num_words, num_bits)
+create_memory(num_words = .words, num_bits = .bits)
 }
 \arguments{
-\item{num_words}{number of rows (words, bytes, etc.)}
+\item{num_words}{number of words}
 
 \item{num_bits}{number of bits in a word - must be a multiple of 8}
 }
 \value{
-a num_words by num_bits array filled with FALSE
+a list of binaryLogic::binary elements, initialized to 0
 }
 \description{
-create a boolean matrix representing a computer memory. The rows
-are words (addressable entities) and the columns are bits.
+create a list of binaryLogic::binary elements
 }
 
