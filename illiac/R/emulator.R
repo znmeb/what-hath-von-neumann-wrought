@@ -180,19 +180,71 @@ illiac_start <- function(program_counter, right_hand, aq, memory) {
   step_list <- illiac_execute()
   }
 }
+
 #' @title Create Memory
 #' @name create_memory
 #' @description create a boolean matrix representing a computer memory. The rows
 #' are words (addressable entities) and the columns are bits.
 #' @export create_memory
 #' @param num_words number of rows (words, bytes, etc.)
-#' @param num_bits number of bits in a word
+#' @param num_bits number of bits in a word - must be a multiple of 8
 #' @return a num_words by num_bits array filled with FALSE
 
 create_memory <- function(num_words, num_bits) {
-  words <- paste("w", seq(0, num_words - 1), sep = "")
-  bits <- paste("b", seq(0, num_bits - 1), sep = "")
-  memory <- array(
-    FALSE, dim = c(length(words), length(bits)), dimnames = list(words, bits))
+  bytes <- num_bits / 8
+  zeroes <- array(data = 0, dim = num_words)
+  memory <- binaryLogic::as.binary(zeroes, signed = TRUE, size = bytes)
   return(memory)
+}
+
+.ias_to_integer <- function(binary) {
+  as.numeric(binary)
+}
+
+.ias_to_fraction <- function(binary) {
+  divisor <- 2 ^ (length(binary) - 1)
+  as.numeric(binary) / divisor
+}
+
+.store <- function(memory, value, address) {
+  memory[[address - 1]] <- value
+  return(memory)
+}
+
+.load <- function(memory, address) {
+  value <- memory[[address - 1]]
+  return(value)
+}
+
+# constants
+.bits <- 40
+.bytes <- .bits / 8
+.multiplier <- 2 ^ (.bits - 1)
+.minint <- -.multiplier
+.maxint <- .multiplier - 1
+.minfrac <- -1
+.maxfrac <- 1 - 1 / .multiplier
+
+# low-level functions
+#' @export encode_integer
+encode_integer <- function(value) {
+
+  # silently enforce bounds
+  integer <- max(.minint, value)
+  integer <- min(.maxint, integer)
+  binaryLogic::as.binary(integer, signed = TRUE, size = .bytes)
+}
+
+#' @export decode_integer
+decode_integer <- function(binary) {
+  as.numeric(binary)
+}
+
+#' @export encode_fraction
+encode_fraction <- function(value) {
+  encode_integer(.multiplier * value)
+}
+#' @export decode_fraction
+decode_fraction <- function(binary) {
+  decode_integer(binary) / .multiplier
 }

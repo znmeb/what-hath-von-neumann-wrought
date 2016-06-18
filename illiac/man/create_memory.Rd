@@ -9,7 +9,7 @@ create_memory(num_words, num_bits)
 \arguments{
 \item{num_words}{number of rows (words, bytes, etc.)}
 
-\item{num_bits}{number of bits in a word}
+\item{num_bits}{number of bits in a word - must be a multiple of 8}
 }
 \value{
 a num_words by num_bits array filled with FALSE

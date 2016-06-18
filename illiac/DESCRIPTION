@@ -8,3 +8,4 @@ Description: The "illiac" package is an emulator for the ILLIAC I.
 License: AGPL-3
 LazyData: TRUE
 RoxygenNote: 5.0.1
+Imports: binaryLogic
