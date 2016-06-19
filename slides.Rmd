@@ -62,63 +62,71 @@ output: ioslides_presentation
 ## Arithmetic unit
 
 ```{r echo = FALSE}
-library(DiagrammeR)
-registers <- create_nodes(nodes = c(
-  "Memory", "Accumulator", "Adder", "Quotient", "R3", "Complement Gate"),
-  shape = "rectangle",
-  width = 2)
-arith_unit <- create_graph(registers)
-arith_unit <- add_edge(arith_unit, "Accumulator", "Memory")
-arith_unit <- add_edge(arith_unit, "Accumulator", "Adder")
-arith_unit <- add_edge(arith_unit, "Adder", "Accumulator")
-arith_unit <- add_edge(arith_unit, "Memory", "Quotient")
-arith_unit <- add_edge(arith_unit, "Memory", "R3")
-arith_unit <- add_edge(arith_unit, "Quotient", "R3")
-arith_unit <- add_edge(arith_unit, "R3", "Complement Gate")
-arith_unit <- add_edge(arith_unit, "Complement Gate", "Adder")
-render_graph(arith_unit)
+DiagrammeR::grViz("arith_unit.gv")
 ```
 
 ## The accumulator (A) and quotient register (Q) coupled
 
 ```{r echo = FALSE}
-library(DiagrammeR)
-bits <- create_nodes(nodes = c(
-  "a0", "a1", "a-middle", "a38", "a39", 
-  "q0", "q1", "q-middle", "q38", "q39"),
-  shape = "rectangle")
-aq <- create_graph(bits, graph_attrs = "rankdir = TB")
-render_graph(aq)
+DiagrammeR::grViz("aq.gv")
 ```
 
-## Right Shifting
+## Left Shifting = multiply AQ by two
+1. Shift a0 -> bit bucket
+2. Shift a1:a39 -> a0:a38
+3. Leave q0 alone!
+4. Shift q1 -> a39
+5. Shift q2:q39 -> q1:q38
+6. Zero -> q39
 
-```{r echo = FALSE}
-bits <- create_nodes(nodes = c(
-  "a0", "a1", "a-middle", "a38", "a39", 
-  "q0", "q1", "q-middle", "q38", "q39"),
-  shape = "rectangle")
-right_shift <- create_graph(bits, graph_attrs = "rankdir = LR")
-right_shift <- add_edge(right_shift, "a0", "a0")
-right_shift <- add_edge(right_shift, "a0", "a1")
-right_shift <- add_edge(right_shift, "a1", "a2")
-right_shift <- add_edge(right_shift, "a2", "a-middle")
-right_shift <- add_edge(right_shift, "a-middle", "a38")
-right_shift <- add_edge(right_shift, "a38", "a39")
-right_shift <- add_edge(right_shift, "a39", "q1")
-right_shift <- add_edge(right_shift, "q1", "q2")
-right_shift <- add_edge(right_shift, "q2", "q-middle")
-right_shift <- add_edge(right_shift, "q-middle", "q38")
-render_graph(right_shift)
-```
-
-## Left Shifting
+## Right Shifting = divide AQ by two
+1. Shift q39 -> bit bucket
+2. Shift q1:q38 -> q2:q39
+3. Leave q0 alone!
+4. Shift a39 -> q1
+5. Shift a0:a38 -> a1:a39
+6. Keep original a0!
 
 ## Adding
+1. Augend
+    * Clear A, or
+    * Hold A, or
+    * Set A = 1/2
+2. Addend
+    * Memory word or Q to R3, then
+3. Complement gate
+    * Pass straight through, or
+    * Negate, or
+    * Absolute value
+3. Form sum in A
 
-## Multiplying
+## Multiplication: initialization
+1. Multiplier is in Q
+2. Multiplicand is in R3
+3. Accumulator
+    * Clear A, or
+    * Hold A, or
+    * Set A = 1/2
+4. Complement gate
+    * Pass straight through, or
+    * Negate, or
+    * Absolute value
+
+## Multiplication: iteration
+39 steps of
+
+* A <- A + Complement gate
+* Shift AQ right one bit
 
 ## Dividing
+1. Double-length dividend in AQ
+2. Divisor is in R3
+3. 39 steps of
+    * subtract R3 from A in the adder
+    * if the result is less than zero, set q39 to 0
+    * if the result is greater than or equal to zero, set q39 to 1 and copy the difference to A
+    * shift AQ left one place, copying q1 into q0
+4. Set q39 to 1 for rounding
 
 ## Control
 
