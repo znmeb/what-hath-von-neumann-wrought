@@ -95,15 +95,48 @@ output: revealjs::revealjs_presentation
 
 ### Julia
 
-## The architecture
+# The architecture
 
-### Arithmentic unit
+## Arithmetic unit
 
-### Memory
+```{r echo = FALSE}
+library(DiagrammeR)
+registers <- create_nodes(nodes = c(
+  "Memory", "Accumulator", "Adder", "Quotient", "R3". Complement Gate"),
+  shape = "rectangle")
+arith_unit <- create_graph(registers)
+arith_unit <- add_edge(arith_unit, "Accumulator", "Memory")
+arith_unit <- add_edge(arith_unit, "Accumulator", "Adder")
+arith_unit <- add_edge(arith_unit, "Adder", "Accumulator")
+arith_unit <- add_edge(arith_unit, "Memory", "Quotient")
+arith_unit <- add_edge(arith_unit, "Memory", "R3")
+arith_unit <- add_edge(arith_unit, "R3", "Complement Gate")
+arith_unit <- add_edge(arith_unit, "Complement Gate", "Adder")
+render_graph(arith_unit)
 
-### Control
+```
 
-### Input / Output
+### Representation of numbers - integers
+
+### Representation of numbers - fractions
+
+### The accumulator (A)
+
+### The quotient register (Q)
+
+### Shifting
+
+### Adding
+
+### Multiplying
+
+### Dividing
+
+## Memory
+
+## Control
+
+## Input / Output
 
 # The software engineering process
 
