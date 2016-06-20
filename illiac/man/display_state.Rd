@@ -18,6 +18,12 @@ display_state(a, q, program_counter, memory)
 \value{
 a data frame with the state as decimal fractions, integers and order pairs
 }
+\description{
+This is the main mechanism for the emulator to present its result
+to the user. It displays the accumulator and quotient registers, the program
+counter and its contents, and the memory as a data frame. Each word is
+shown as a decimal fraction, a decimal integer, and as an order pair.
+}
 \examples{
 \dontrun{
 williams <- create_memory()

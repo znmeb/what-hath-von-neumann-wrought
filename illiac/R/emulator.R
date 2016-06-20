@@ -32,9 +32,7 @@ illiac_hex_encode <- function(digit) {
 #' @param value numeric the number to encode
 #' @return the binaryLogic::binary equivalent. Note that any fractional part is
 #' discarded and the bounds are silenty enforced
-#' @export illiac_hex_encode
-
-#' @export encode_integer
+#' @export
 encode_integer <- function(value) {
 
   # silently enforce bounds
@@ -43,17 +41,33 @@ encode_integer <- function(value) {
   binaryLogic::as.binary(integer, signed = TRUE, size = .bytes)
 }
 
-#' @export decode_integer
+#' @title Decode Integer
+#' @name decode_integer
+#' @description Convert an ILLIAC signed integer to an R numeric
+#' @param binary a binaryLogic::binary ILLIAC word
+#' @return the R numeric equivalent assuming the word is a signed integer
+#' @export
 decode_integer <- function(binary) {
   as.numeric(binary)
 }
 
-#' @export encode_fraction
+#' @title Encode Fraction
+#' @name encode_fraction
+#' @description Convert an R numeric to an ILLIAC signed fraction
+#' @param value numeric the number to encode
+#' @return the binaryLogic::binary equivalent. Note that the bounds are silenty enforced
+#' @export
+#' @export
 encode_fraction <- function(value) {
   encode_integer(.multiplier * value)
 }
 
-#' @export decode_fraction
+#' @title Decode Fraction
+#' @name decode_fraction
+#' @description Convert an ILLIAC fraction to an R numeric
+#' @param binary a binaryLogic::binary ILLIAC word
+#' @return the R numeric equivalent assuming the word is a signed fraction
+#' @export
 decode_fraction <- function(binary) {
   decode_integer(binary) / .multiplier
 }
@@ -90,6 +104,10 @@ create_memory <- function(num_words = .words, num_bits = .bits) {
 
 #' @title Display State
 #' @name display_state
+#' @description This is the main mechanism for the emulator to present its result
+#' to the user. It displays the accumulator and quotient registers, the program
+#' counter and its contents, and the memory as a data frame. Each word is
+#' shown as a decimal fraction, a decimal integer, and as an order pair.
 #' @param a the accumulator register
 #' @param q the quotient register
 #' @param program_counter 2 * the actual program counter + 0 for left or 1 for right
@@ -121,4 +139,35 @@ display_state <- function(a, q, program_counter, memory) {
   result <- as.data.frame(cbind(
     address, integer, fraction, left_order, left_address, right_order, right_address))
   return(result)
+}
+
+#' @title Emulate
+#' @name emulate
+#' @description The emulator itself. The user calls it with an initial state.
+#' It proceeds order by order until a stopping condition happens. At termination
+#' the emulator returns the reason for stopping and the state at termination.
+#' @param a the accumulator register
+#' @param q the quotient register
+#' @param program_counter 2 * the actual program counter + 0 for left or 1 for right
+#' @param memory the memory
+#' @return a list containing
+#' \itemize{
+#' \item display a data frame from "display_state" with the terminal state
+#' \item a the accumulation
+#' \item q the quotient
+#' \item program_counter the coded program counter
+#' \item memory the memory}
+#' @export
+
+emulate <- function(a, q, program_counter, memory) {
+  # unpack arguments
+  # fetch first order pair
+  # main loop: while "running" do
+  #     decode current instruction
+  #     return stop code if it's a stop or hangup
+  #     execute it if it's a transfer; next
+  #     execute non-transfer; return stop code if it's a divide hangup
+  #     increment program counter
+  #     next:
+  #
 }
