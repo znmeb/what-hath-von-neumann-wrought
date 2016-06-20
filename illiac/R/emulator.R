@@ -26,6 +26,14 @@ illiac_hex_encode <- function(digit) {
   return(illiac_hex_codes[digit + 1])
 }
 
+#' @title Encode Integer
+#' @name encode_integer
+#' @description Convert an R numeric as an ILLIAC signed integer
+#' @param value numeric the number to encode
+#' @return the binaryLogic::binary equivalent. Note that any fractional part is
+#' discarded and the bounds are silenty enforced
+#' @export illiac_hex_encode
+
 #' @export encode_integer
 encode_integer <- function(value) {
 
@@ -80,10 +88,30 @@ create_memory <- function(num_words = .words, num_bits = .bits) {
   return(memory)
 }
 
-#' @export display_memory
-display_memory <- function(a, q, memory) {
-  memx <- c(list(a), list(q), memory)
-  address <- c("a", "q", as.character(seq(0, length(memory) - 1)))
+#' @title Display State
+#' @name display_state
+#' @param a the accumulator register
+#' @param q the quotient register
+#' @param program_counter 2 * the actual program counter + 0 for left or 1 for right
+#' @param memory the memory
+#' @return a data frame with the state as decimal fractions, integers and order pairs
+#' @examples
+#' \dontrun{
+#' williams <- create_memory()
+#' williams[[1]] <- encode_fraction(-1)
+#' williams[[2]] <- encode_fraction(1)
+#' a <- williams[[1]]
+#' q <- williams[[2]]
+#' program_counter <- 3
+#' state <- display_state(a, q, program_counter, williams)
+#' View(state)}
+#' @export
+display_state <- function(a, q, program_counter, memory) {
+  pc <- program_counter %/% 2
+  pcd <- paste(pc, ifelse(program_counter %% 2 == 0, "L", "R"), sep = "")
+  memx <- c(list(a), list(q), list(memory[[pc + 1]]), memory)
+  address <- c(
+    "a", "q", pcd, as.character(seq(0, length(memory) - 1)))
   integer <- sapply(memx, decode_integer)
   fraction <- sapply(memx, decode_fraction)
   left_order <- .format_order(sapply(memx, .decode_left_order))

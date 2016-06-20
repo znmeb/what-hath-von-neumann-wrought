@@ -3,7 +3,7 @@
 export(create_memory)
 export(decode_fraction)
 export(decode_integer)
-export(display_memory)
+export(display_state)
 export(encode_fraction)
 export(encode_integer)
 export(illiac_hex_encode)
