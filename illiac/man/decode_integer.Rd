@@ -4,15 +4,17 @@
 \alias{decode_integer}
 \title{Decode Integer}
 \usage{
-decode_integer(binary)
+decode_integer(word)
 }
 \arguments{
-\item{binary}{a binaryLogic::binary ILLIAC word}
+\item{word}{a double representing an ILLIAC word as an integer}
 }
 \value{
-the R numeric equivalent assuming the word is a signed integer
+the input word
 }
 \description{
-Convert an ILLIAC signed integer to an R numeric
+ILLIAC words are stored in the emulator as integers in a
+double, since R integers are on 32 bits. As long as nothing creates a non-
+integer we can just treat these as words.
 }
 

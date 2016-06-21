@@ -10,7 +10,7 @@ encode_fraction(value)
 \item{value}{numeric the number to encode}
 }
 \value{
-the binaryLogic::binary equivalent. Note that the bounds are silenty enforced
+the fraction scaled to an integer and rounded
 }
 \description{
 Convert an R numeric to an ILLIAC signed fraction

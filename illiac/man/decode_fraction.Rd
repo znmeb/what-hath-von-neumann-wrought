@@ -4,10 +4,10 @@
 \alias{decode_fraction}
 \title{Decode Fraction}
 \usage{
-decode_fraction(binary)
+decode_fraction(value)
 }
 \arguments{
-\item{binary}{a binaryLogic::binary ILLIAC word}
+\item{value}{a numeric representing a scaled fraction}
 }
 \value{
 the R numeric equivalent assuming the word is a signed fraction

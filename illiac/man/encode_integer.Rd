@@ -10,10 +10,10 @@ encode_integer(value)
 \item{value}{numeric the number to encode}
 }
 \value{
-the binaryLogic::binary equivalent. Note that any fractional part is
-discarded and the bounds are silenty enforced
+a double truncated to ILLIAC signed integer range
 }
 \description{
-Convert an R numeric as an ILLIAC signed integer
+We store ILLIAC words as integers in a double. So all we need to
+do to encode an integer is enforce bound.
 }
 

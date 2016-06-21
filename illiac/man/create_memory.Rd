@@ -4,17 +4,15 @@
 \alias{create_memory}
 \title{Create Memory}
 \usage{
-create_memory(num_words = .words, num_bits = .bits)
+create_memory(num_words = .words)
 }
 \arguments{
 \item{num_words}{number of words}
-
-\item{num_bits}{number of bits in a word - must be a multiple of 8}
 }
 \value{
-a list of binaryLogic::binary elements, initialized to 0
+a numeric vector initialized to 0
 }
 \description{
-create a list of binaryLogic::binary elements
+create a vector of integers
 }
 

@@ -1,14 +1,17 @@
 # constants
 .bits <- 40
-.words = 4096
-.lorder <- 1:8
+.words = 1024
+.ltype <- 1:4
+.lvariant <- 5:8
 .laddress <- 9:20
-.rorder <- 21:28
+.rtype <- 21:24
+.rvariant <- 25:28
 .raddress <- 29:40
 .bytes <- .bits / binaryLogic::byte()
-.multiplier <- 2 ^ (.bits - 1)
-.minint <- -.multiplier
-.maxint <- .multiplier - 1
+.frac2int <- 2 ^ (.bits - 1)
+.int2frac <- 2 ^ -(.bits - 1)
+.minint <- -.frac2int
+.maxint <- .frac2int - 1
 
 #' @title ILLIAC hexadecimal encode
 #' @name illiac_hex_encode
@@ -28,78 +31,79 @@ illiac_hex_encode <- function(digit) {
 
 #' @title Encode Integer
 #' @name encode_integer
-#' @description Convert an R numeric as an ILLIAC signed integer
+#' @description We store ILLIAC words as integers in a double. So all we need to
+#' do to encode an integer is enforce bound.
 #' @param value numeric the number to encode
-#' @return the binaryLogic::binary equivalent. Note that any fractional part is
-#' discarded and the bounds are silenty enforced
+#' @return a double truncated to ILLIAC signed integer range
 #' @export
 encode_integer <- function(value) {
 
   # silently enforce bounds
-  integer <- max(.minint, value)
-  integer <- min(.maxint, integer)
-  binaryLogic::as.binary(integer, signed = TRUE, size = .bytes)
-}
+  return(min(.maxint, max(.minint, round(value, 0))))
+  }
 
 #' @title Decode Integer
 #' @name decode_integer
-#' @description Convert an ILLIAC signed integer to an R numeric
-#' @param binary a binaryLogic::binary ILLIAC word
-#' @return the R numeric equivalent assuming the word is a signed integer
+#' @description ILLIAC words are stored in the emulator as integers in a
+#' double, since R integers are on 32 bits. As long as nothing creates a non-
+#' integer we can just treat these as words.
+#' @param word a double representing an ILLIAC word as an integer
+#' @return the input word
 #' @export
-decode_integer <- function(binary) {
-  as.numeric(binary)
+decode_integer <- function(word) {
+ return(word)
 }
 
 #' @title Encode Fraction
 #' @name encode_fraction
 #' @description Convert an R numeric to an ILLIAC signed fraction
 #' @param value numeric the number to encode
-#' @return the binaryLogic::binary equivalent. Note that the bounds are silenty enforced
+#' @return the fraction scaled to an integer and rounded
 #' @export
 #' @export
 encode_fraction <- function(value) {
-  encode_integer(.multiplier * value)
+  encode_integer(round(.frac2int * value), 0)
 }
 
 #' @title Decode Fraction
 #' @name decode_fraction
 #' @description Convert an ILLIAC fraction to an R numeric
-#' @param binary a binaryLogic::binary ILLIAC word
+#' @param value a numeric representing a scaled fraction
 #' @return the R numeric equivalent assuming the word is a signed fraction
 #' @export
-decode_fraction <- function(binary) {
-  decode_integer(binary) / .multiplier
+decode_fraction <- function(value) {
+  return(.int2frac * value)
 }
 
-# internals for memory display
-.decode_left_order <- function(binary) as.numeric(binaryLogic::as.binary(
-  binary[.lorder], signed = FALSE))
-.decode_left_address <- function(binary) as.numeric(binaryLogic::as.binary(
-  binary[.laddress], signed = FALSE))
-.decode_right_order <- function(binary) as.numeric(binaryLogic::as.binary(
-  binary[.rorder], signed = FALSE))
-.decode_right_address <- function(binary) as.numeric(binaryLogic::as.binary(
-  binary[.raddress], signed = FALSE))
-.format_order <- function(order) {
-  type <- illiac_hex_encode(order %/% 16)
-  variant <- illiac_hex_encode(order %% 16)
+# internals for bit manipulation
+.int2bits <- function(integer) {
+  return(binaryLogic::as.binary(integer, signed = TRUE, size = .bytes))
+}
+.decode_order_pair <- function(integer) {
+  bits <- .int2bits(integer)
+  ltype <- as.numeric(bits[.ltype])
+  lvariant <- as.numeric(bits[.lvariant])
+  laddress <- as.numeric(bits[.laddress])
+  rtype <- as.numeric(bits[.rtype])
+  rvariant <- as.numeric(bits[.rvariant])
+  raddress <- as.numeric(bits[.raddress])
+}
+
+.format_order <- function(type, variant) {
+  type <- illiac_hex_encode(type)
+  variant <- illiac_hex_encode(variant)
   return(paste(type, variant, sep = ""))
 }
 
 #' @title Create Memory
 #' @name create_memory
-#' @description create a list of binaryLogic::binary elements
+#' @description create a vector of integers
 #' @export create_memory
 #' @param num_words number of words
-#' @param num_bits number of bits in a word - must be a multiple of 8
-#' @return a list of binaryLogic::binary elements, initialized to 0
+#' @return a numeric vector initialized to 0
 
-create_memory <- function(num_words = .words, num_bits = .bits) {
-  bytes <- num_bits / binaryLogic::byte()
-  zeroes <- array(data = 0, dim = num_words)
-  memory <- binaryLogic::as.binary(zeroes, signed = TRUE, size = bytes)
-  return(memory)
+create_memory <- function(num_words = .words) {
+  return(vector(mode = numeric, length = num_words))
 }
 
 #' @title Display State
@@ -127,7 +131,7 @@ create_memory <- function(num_words = .words, num_bits = .bits) {
 display_state <- function(a, q, program_counter, memory) {
   pc <- program_counter %/% 2
   pcd <- paste(pc, ifelse(program_counter %% 2 == 0, "L", "R"), sep = "")
-  memx <- c(list(a), list(q), list(memory[[pc + 1]]), memory)
+  memx <- c(a, q, memory[[pc + 1]], memory)
   address <- c(
     "a", "q", pcd, as.character(seq(0, length(memory) - 1)))
   integer <- sapply(memx, decode_integer)
@@ -170,4 +174,19 @@ emulate <- function(a, q, program_counter, memory) {
   #     increment program counter
   #     next:
   #
+}
+
+#' @title SADOI
+#' @name sadoi
+#' @description A re-implementation of the ILLIAC Symbolic Address Decimal
+#' Order Input (SADOI) assembler.
+#' @param source_file path to a file with directives and orders in SADOI format
+#' @return a list of
+#' \itemize{
+#' \item memory a "memory" object containing the assembled orders
+#' \item start the program counter for the last start directive encountered}
+#' @export
+
+sadoi <- function(source_file) {
+
 }
