@@ -1,6 +1,6 @@
 # constants
 .bits <- 40
-.words = 1024
+.words <- 1024
 .ltype <- 1:4
 .lvariant <- 5:8
 .laddress <- 9:20
@@ -12,7 +12,8 @@
 .int2frac <- 2 ^ -(.bits - 1)
 .minint <- -.frac2int
 .maxint <- .frac2int - 1
-
+.address_divisor <- 2 ^ 12
+.order_divisor <- 2 ^ 8
 #' @title ILLIAC hexadecimal encode
 #' @name illiac_hex_encode
 #' @description Most ILLIAC docs use the term "sexadecimal" for base 16.
@@ -62,7 +63,7 @@ decode_integer <- function(word) {
 #' @export
 #' @export
 encode_fraction <- function(value) {
-  encode_integer(round(.frac2int * value), 0)
+  encode_integer(round(.frac2int * value, 0))
 }
 
 #' @title Decode Fraction
@@ -103,46 +104,7 @@ decode_fraction <- function(value) {
 #' @return a numeric vector initialized to 0
 
 create_memory <- function(num_words = .words) {
-  return(vector(mode = numeric, length = num_words))
-}
-
-#' @title Display State
-#' @name display_state
-#' @description This is the main mechanism for the emulator to present its result
-#' to the user. It displays the accumulator and quotient registers, the program
-#' counter and its contents, and the memory as a data frame. Each word is
-#' shown as a decimal fraction, a decimal integer, and as an order pair.
-#' @param a the accumulator register
-#' @param q the quotient register
-#' @param program_counter 2 * the actual program counter + 0 for left or 1 for right
-#' @param memory the memory
-#' @return a data frame with the state as decimal fractions, integers and order pairs
-#' @examples
-#' \dontrun{
-#' williams <- create_memory()
-#' williams[[1]] <- encode_fraction(-1)
-#' williams[[2]] <- encode_fraction(1)
-#' a <- williams[[1]]
-#' q <- williams[[2]]
-#' program_counter <- 3
-#' state <- display_state(a, q, program_counter, williams)
-#' View(state)}
-#' @export
-display_state <- function(a, q, program_counter, memory) {
-  pc <- program_counter %/% 2
-  pcd <- paste(pc, ifelse(program_counter %% 2 == 0, "L", "R"), sep = "")
-  memx <- c(a, q, memory[[pc + 1]], memory)
-  address <- c(
-    "a", "q", pcd, as.character(seq(0, length(memory) - 1)))
-  integer <- sapply(memx, decode_integer)
-  fraction <- sapply(memx, decode_fraction)
-  left_order <- .format_order(sapply(memx, .decode_left_order))
-  left_address <- sapply(memx, .decode_left_address)
-  right_order <- .format_order(sapply(memx, .decode_right_order))
-  right_address <- sapply(memx, .decode_right_address)
-  result <- as.data.frame(cbind(
-    address, integer, fraction, left_order, left_address, right_order, right_address))
-  return(result)
+  return(array(0, dim = num_words))
 }
 
 #' @title Emulate
@@ -176,17 +138,73 @@ emulate <- function(a, q, program_counter, memory) {
   #
 }
 
-#' @title SADOI
-#' @name sadoi
-#' @description A re-implementation of the ILLIAC Symbolic Address Decimal
-#' Order Input (SADOI) assembler.
-#' @param source_file path to a file with directives and orders in SADOI format
+#' @title Interpret as ILLIAC
+#' @name interpret_as_illiac
+#' @description Interpret a vector of ILLIAC words in doubles as fractions and order pairs
+#' @param illiac_words a vector of ILLIAC words, stored as integers in doubles
 #' @return a list of
 #' \itemize{
-#' \item memory a "memory" object containing the assembled orders
-#' \item start the program counter for the last start directive encountered}
+#' \item fraction double - the input vector scaled to print as fractions
+#' \item left_order integer the left order
+#' \item left_address integer the left 12-bit address
+#' \item right_order integer the right order
+#' \item right_address integer the left 12-bit address}
 #' @export
 
-sadoi <- function(source_file) {
+interpret_as_illiac <- function(illiac_words) {
+  fraction <- illiac_words * .int2frac
+  right_address <- illiac_words %% .address_divisor
+  work <- illiac_words %/% .address_divisor
+  right_order <- work %% .order_divisor
+  work <- work %/% .order_divisor
+  left_address <- work %% .address_divisor
+  work <- work %/% .address_divisor
+  left_order <- work %% .order_divisor
+  return(list(
+    fraction = fraction,
+    left_order = left_order,
+    left_address = left_address,
+    right_order = right_order,
+    right_address = right_address))
+}
 
+#' @title Display State
+#' @name display_state
+#' @description This is the main mechanism for the emulator to present its result
+#' to the user. It displays the accumulator and quotient registers, the program
+#' counter and its contents, and the memory as a data frame. Each word is
+#' shown as a decimal fraction, a decimal integer, and as an order pair.
+#' @param a the accumulator register
+#' @param q the quotient register
+#' @param program_counter 2 * the actual program counter + 0 for left or 1 for right
+#' @param memory the memory
+#' @return a data frame with the state as decimal fractions, integers and order pairs
+#' @examples
+#' \dontrun{
+#' williams <- create_memory()
+#' williams[[1]] <- encode_fraction(-1)
+#' williams[[2]] <- encode_fraction(1)
+#' a <- williams[[1]]
+#' q <- williams[[2]]
+#' program_counter <- 3
+#' state <- display_state(a, q, program_counter, williams)
+#' View(state)}
+#' @export
+
+display_state <- function(a, q, program_counter, memory) {
+  pc <- program_counter %/% 2
+  pcd <- paste(pc, ifelse(program_counter %% 2 == 0, "L", "R"), sep = "")
+  memx <- c(a, q, memory[[pc + 1]], memory)
+  address <- c(
+    "a", "q", pcd, as.character(seq(0, length(memory) - 1)))
+
+  integer <- memx
+  w <- interpret_as_illiac(memx)
+  fraction <- w$fraction
+  left_order <- w$left_order
+  left_address <- w$left_address
+  right_order <- w$right_order
+  right_address <- w$right_address
+  return(as.data.frame(cbind(
+    address, integer, fraction, left_order, left_address, right_order, right_address)))
 }
