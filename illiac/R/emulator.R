@@ -201,10 +201,16 @@ display_state <- function(a, q, program_counter, memory) {
   integer <- memx
   w <- interpret_as_illiac(memx)
   fraction <- w$fraction
-  left_order <- w$left_order
+  left_order <- .hex_order(w$left_order)
   left_address <- w$left_address
-  right_order <- w$right_order
+  right_order <- .hex_order(w$right_order)
   right_address <- w$right_address
   return(as.data.frame(cbind(
     address, integer, fraction, left_order, left_address, right_order, right_address)))
+}
+
+.hex_order <- function(order) {
+  type <- illiac_hex_encode(order %/% 16)
+  variant <- illiac_hex_encode(order %% 16)
+  return(paste(type, variant, sep = ""))
 }
