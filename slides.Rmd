@@ -22,23 +22,18 @@ output:
 * integrated development environments, and
 * documentation tools.
 
-## Programming paradigms
+## Programming paradigms (mid 1960s to the present)
 * Object-oriented programming
-    - Simula67 (1967)
-    - Smalltalk 80 (1980)
+    - [Simula67](https://en.wikipedia.org/wiki/Simula) (1967), [Smalltalk-80](https://en.wikipedia.org/wiki/Smalltalk) (1980)
 * Functional programming
-    - OCaml (1996)
-    - Haskell (1990)
+    - [OCaml](https://en.wikipedia.org/wiki/OCaml) (1996), [Haskell](https://en.wikipedia.org/wiki/Haskell_(programming_language)) (1990)
 * Array programming
-    - Matlab (1984)
-    - S (1976)
-    - R (1994)
-    - APL (1966)
+    - [MATLAB](https://en.wikipedia.org/wiki/MATLAB) (1984), [S](https://en.wikipedia.org/wiki/S_(programming_language)) (1976), [R](https://en.wikipedia.org/wiki/R_(programming_language)) (1994), [APL](https://en.wikipedia.org/wiki/APL_(programming_language)) (1966)
 
 ## What made all this possible?
 * Transistor logic
 * Magnetic core random access memory
-* General-purpose architectures like System\\360 (1964)
+* General-purpose architectures like [System\\360](https://en.wikipedia.org/wiki/IBM_System/360) (1964)
 
 ## And before that?
 * Two kinds of computers - "scientific" and "business"
@@ -53,7 +48,7 @@ output:
 
 ## Like Hell It Was!
 * By July of 1969, large System\\360 mainframes were in use at NASA
-* Even in 1961, the state of the art was an IBM 7090
+* Even in 1961, the state of the art was an [IBM 7090](https://en.wikipedia.org/wiki/IBM_7090)
 * \</rant\>
 
 ## I've taken away ...
@@ -63,8 +58,8 @@ output:
 * At least your computer's transistorized
 
 ## April 1957
-* The first FORTRAN compiler is delivered ...
-* For the IBM 704 ... a vacuum tube machine
+* The first [FORTRAN](https://en.wikipedia.org/wiki/Fortran) compiler is delivered ...
+* For the [IBM 704](https://en.wikipedia.org/wiki/IBM_704) ... a vacuum tube machine
 * With floating point hardware and index registers
 * And magnetic core memory
 * I'm not finished
@@ -74,13 +69,11 @@ output:
 * No floating point
 * No index registers
 * Cathode ray tube memory
-* ***Based on the IAS machine***
+* ***Based on the [IAS machine](https://en.wikipedia.org/wiki/IAS_machine)***
 
-## What was your first computer?
+## And so, time travelers, we've arrived at our destination
 
-## Did you learn assembler?
-
-## Did you learn machine code?
+What Hath Von Neumann (and many others) Wrought?
 
 # John von Neumann
 
@@ -110,10 +103,6 @@ output:
 * MANIAC
 * JOHNNIAC
 * ILLIAC and copies
-
-## Commercial variants
-* IBM 701
-* Univac 1100
 
 # The architecture
 
