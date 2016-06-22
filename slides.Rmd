@@ -1,22 +1,60 @@
 ---
 title: "What Hath Von Neumann Wrought?"
 author: "M. Edward (Ed) Borasky"
-date: "June 18, 2016"
-output: ioslides_presentation
+date: "June 23, 2016"
+output: 
+  ioslides_presentation:
+    incremental: true
 ---
 # Motivation
 
 ## Standing on the shoulders of giants
+* "If I have seen farther than others, it is because I was standing on the shoulders of giants." - Isaac Newton 
+* "If I have not seen as far as others, it is because giants were standing on my shoulders." - Hal Abelson 
+* "In computer science, we stand on each other's feet." - Brian Reid
+* "How many people can stand on the shoulders of a giant before the giant collapses?" - znmeb
 
-## Born with Curiosity
+## We program today in a rich environment
+* numerous abstract programming paradigms,
+* elegant realizations of those paradigms in programming languages,
+* well-crafted run-times, interpreters and compilers,
+* distributed version control systems for collaboration,
+* integrated development environments, and
+* documentation tools.
 
-## This was done with a slide rule
+## Programming paradigms
+* Object-oriented programming
+    - Simula67 (1967)
+    - Smalltalk 80 (1980)
+* Functional programming
+    - OCaml (1996)
+    - Haskell (1990)
+* Array programming
+    - Matlab (1984)
+    - S (1976)
+    - R (1994)
+    - APL (1966)
 
-## Archive.org and bitsavers
+## What made all this possible?
+* Transistor logic
+* Magnetic core random access memory
+* General-purpose architectures like System\\360 (1964)
 
-## The world of Grace Hopper
+## And before that?
+* Two kinds of computers - "scientific" and "business"
+* Two languages - FORTRAN and COBOL
 
-## The Harvard Mark I
+## May 25, 1961 - July 20, 1969
+[John F. Kennedy's Moon Speech to Congress - May 25, 1961](https://youtu.be/Kza-iTe2100)
+
+## \<rant\>
+
+![](likehell.jpg)
+
+## Like Hell It Was!
+* By July of 1969, large System\\360 mainframes were in use at NASA
+* Even in 1961, the state of the art was an IBM 7090
+* \</rant\>
 
 ## What was your first computer?
 
