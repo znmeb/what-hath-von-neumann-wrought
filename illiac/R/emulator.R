@@ -214,3 +214,34 @@ display_state <- function(a, q, program_counter, memory) {
   variant <- illiac_hex_encode(order %% 16)
   return(paste(type, variant, sep = ""))
 }
+
+#' @title ILLIAC multiply
+#' @name illiac_multiply
+#' @description Emulate an ILLIAC multiply
+#' @param a binaryLogic::binary the accumulator register
+#' @param q binaryLogic::binary the quotient register (multiplier)
+#' @param binaryLogic::binary r3 the r3 register (multiplicand)
+#' @return a list with a and q = 78-bit product
+#' @examples
+#' \dontrun{
+#' r3 <- as.binary(encode_fraction(1/2), size = 5, signed = TRUE)
+#' print(r3)
+#' q <- r3
+#' print(q)
+#' a <- as.binary(encode_fraction(0), size = 5, signed = TRUE)
+#' print(a)
+#' product <- illiac_multiply(a, q, r3)
+#' print(product$a)
+#' print(product$q)}
+#' @export
+illiac_multiply <- function(a, q, r3) {
+  for (i in 1:(.bits - 1)) {
+    if (q[.bits]) {
+      a <- a + r3
+    }
+  q[3:.bits] <- q[2:(.bits - 1)]
+  q[2] <- a[.bits]
+  a[2:.bits] <- a[1:(.bits - 1)]
+  }
+  return(list(a = a, q = q))
+}
