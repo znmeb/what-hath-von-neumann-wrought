@@ -239,9 +239,50 @@ illiac_multiply <- function(a, q, r3) {
     if (q[.bits]) {
       a <- a + r3
     }
-  q[3:.bits] <- q[2:(.bits - 1)]
-  q[2] <- a[.bits]
-  a[2:.bits] <- a[1:(.bits - 1)]
+    q[3:.bits] <- q[2:(.bits - 1)]
+    q[2] <- a[.bits]
+    a[2:.bits] <- a[1:(.bits - 1)]
   }
   return(list(a = a, q = q))
+}
+
+#' @title ILLIAC divide
+#' @name illiac_divide
+#' @description Emulate an ILLIAC divide
+#' @param a binaryLogic::binary the accumulator register (upper dividend)
+#' @param q binaryLogic::binary the quotient register (lower dividend)
+#' @param binaryLogic::binary r3 the r3 register (divisor)
+#' @return a list with a and q = residue and quotient
+#' @examples
+#' \dontrun{
+#' r3 <- as.binary(encode_fraction(1/2), size = 5, signed = TRUE)
+#' print(r3)
+#' q <- r3
+#' print(q)
+#' a <- as.binary(encode_fraction(0), size = 5, signed = TRUE)
+#' print(a)
+#' product <- illiac_multiply(a, q, r3)
+#' print(product$a)
+#' print(product$q)
+#' division <- illiac_divide(a, q, r3)
+#' print(division$a)
+#' print(division$q)}
+#' @export
+illiac_divide <- function(a, q, r3) {
+  ax <- a
+  qx <- q
+  for (i in 1:(.bits - 1)) {
+    diff <- ax - r3
+    if (diff >= 0) {
+      ax <- diff
+      qx[.bits] <- 1
+    }
+    ax[1:(.bits - 1)] <- ax[2:.bits]
+    ax[.bits] <- qx[2]
+    qx[1] <- qx[2]
+    qx[2:(.bits - 1)] <- qx[3:.bits]
+    qx[.bits] <- 0
+  }
+  qx[.bits] <- 1
+  return(list(a = ax, q = qx))
 }
