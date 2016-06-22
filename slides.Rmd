@@ -56,6 +56,26 @@ output:
 * Even in 1961, the state of the art was an IBM 7090
 * \</rant\>
 
+## I've taken away ...
+* Your IDEs, version control, the Internet
+* Your programming paradigms
+* But hey, at least you've got FORTRAN and COBOL
+* At least your computer's transistorized
+
+## April 1957
+* The first FORTRAN compiler is delivered ...
+* For the IBM 704 ... a vacuum tube machine
+* With floating point hardware and index registers
+* And magnetic core memory
+* I'm not finished
+
+## April 1952
+* The [IBM 701](https://en.wikipedia.org/wiki/IBM_701) is announced
+* No floating point
+* No index registers
+* Cathode ray tube memory
+* ***Based on the IAS machine***
+
 ## What was your first computer?
 
 ## Did you learn assembler?
