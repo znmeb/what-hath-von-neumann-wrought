@@ -3,8 +3,10 @@ title: "What Hath Von Neumann Wrought?"
 author: "M. Edward (Ed) Borasky"
 date: "June 23, 2016"
 output:
-  revealjs::revealjs_presentation:
+  ioslides_presentation:
     incremental: yes
+    widescreen: true
+bibliography: references.bib
 ---
 # Motivation
 
@@ -29,6 +31,8 @@ output:
     - [OCaml](https://en.wikipedia.org/wiki/OCaml) (1996), [Haskell](https://en.wikipedia.org/wiki/Haskell_(programming_language)) (1990)
 * Array programming
     - [MATLAB](https://en.wikipedia.org/wiki/MATLAB) (1984), [S](https://en.wikipedia.org/wiki/S_(programming_language)) (1976), [R](https://en.wikipedia.org/wiki/R_(programming_language)) (1994), [APL](https://en.wikipedia.org/wiki/APL_(programming_language)) (1966)
+* Symbolic math
+    - [Maxima](https://en.wikipedia.org/wiki/Maxima_(software)) (1998), [Mathematica](https://en.wikipedia.org/wiki/Mathematica) (1998)
 
 ## What made all this possible?
 * Transistor logic
@@ -40,7 +44,7 @@ output:
 * Two languages - FORTRAN and COBOL
 
 ## May 25, 1961 - July 20, 1969
-[John F. Kennedy's Moon Speech to Congress - May 25, 1961](https://youtu.be/Kza-iTe2100)
+[John F. Kennedy's Moon Speech to Congress - May 25, 1961](https://youtu.be/Kza-iTe2100) <https://youtu.be/Kza-iTe2100>
 
 ## \<rant\>
 
@@ -76,28 +80,60 @@ output:
 
 What Hath Von Neumann (and many others) Wrought?
 
-# The IAS Machines
+# The IAS machines
 
-## State of scientific computing
+## Some books for historical perspective
+* _John Von Neumann: The Scientific Genius who Pioneered the Modern Computer, Game Theory, Nuclear Deterrence, and Much More_ [@Macrae2000]
+* _The Computer from Pascal to von Neumann_ [@Goldstine2008]
+* _Turing's Cathedral_ [@Dyson2012]
 
-## Preliminary discussions
+## It all started with ...
+["Preliminary Discussion of the Logical Design of an Electronic Computing Instrument"](http://grch.com.ar/docs/p1/Apuntes/eng/Logical%20Design%20of%20an%20Electronic%20Computing%20Instrument.pdf) [@Burks1946]. 
 
-## Why I made such a big deal out of floating point and index registers
+* That defined the architecture and a plan for the hardware. 
+* Engineers in many cases followed the plan with some modifications.
 
-## Planning and coding
-
-## Hardware
-* MANIAC
-* JOHNNIAC
-* ILLIAC and copies
+## And the software?
+["Planning and coding of problems for an electronic computing instrument"](http://bitsavers.trailing-edge.com/pdf/ias/Planning_and_Coding_of_Problems_for_an_Electronic_Computing_Instrument_Part_II_Volume_II_Apr48.pdf) [@Goldstine1948]
 
 # The architecture
 
-## Arithmetic unit
+## The memory
+* 4096 words of "Selectron" memory in the original design
+* Words were binary, 40 bits each
+* Some implementations had fewer words; for example ILLIAC only had 1024
 
+## A key concept - programs and data occupying the same memory space!
+* A program could act on either data or instructions
+
+## Arithmetic unit
+* A 40-bit accumulator (A)
+* A 40-bit multiplier-quotient register (Q)
+* A memory register, called R3
+* A complement gate
+* An adder
+* We number bits from left to right starting at 0
+* Left-most bit of A is a0 and right-most is a39, etc.
+
+## The arithmetic unit
 ```{r echo = FALSE}
 DiagrammeR::grViz("arith_unit.gv")
 ```
+
+## Fractional fixed-point two's-complement arithmetic
+* Most arithmetic assumed numbers were two's-complement fractions
+* Smallest number (hexadecimal): 80000 00000 (-1)
+* Largest number (hexadecimal): 7FFFF FFFFF (+1 - 2 ^ -39)
+* 1/2 = 40000 00000
+* -1/2 = C0000 00000
+* A sign bit (leftmost bit) and 39 bits of precision = 40 bits
+
+## Double-precision
+* Some operations treated A and Q as the most and least significant parts of a fraction with a sign and 78 bits of precision
+* The left-most bit of A (a0) is the sign bit
+* The left-most bit of Q (q0) is ignored
+* Multiplying two single-precision numbers could produce a double-precision product
+* Dividing a double-precision dividend by a single-precision divisor produced a single-precision quotient
 
 ## The accumulator (A) and quotient register (Q) coupled
 
@@ -119,10 +155,10 @@ DiagrammeR::grViz("aq.gv")
 3. Leave q0 alone!
 4. Shift a39 -> q1
 5. Shift a0:a38 -> a1:a39
-6. Keep original a0!
+6. Keep original a0 - the sign bit propagates to the right!
 
-## Adding
-1. Augend
+## Adding or Subtracting
+1. Augend is in A
     * Clear A, or
     * Hold A, or
     * Set A = 1/2
@@ -138,9 +174,8 @@ DiagrammeR::grViz("aq.gv")
 1. Multiplier is in Q
 2. Multiplicand is in R3
 3. Accumulator
-    * Clear A, or
-    * Hold A, or
-    * Set A = 1/2
+    * Clear A (full multiply -> AQ), or
+    * Set A = 1/2 (rounded multiply - A)
 4. Complement gate
     * Pass straight through, or
     * Negate, or
@@ -152,19 +187,36 @@ DiagrammeR::grViz("aq.gv")
 * A <- A + Complement gate
 * Shift AQ right one bit
 
-## Dividing
-1. Double-length dividend in AQ
+## Division
+1. Start with double-precision dividend in AQ
 2. Divisor is in R3
 3. 39 steps of
     * subtract R3 from A in the adder
     * if the result is less than zero, set q39 to 0
-    * if the result is greater than or equal to zero, set q39 to 1 and copy the difference to A
+    * if the result is greater than or equal to zero, set q39 to 1 and copy the result to A
     * shift AQ left one place, copying q1 into q0
 4. Set q39 to 1 for rounding
 
 ## Control
+* Two 20-bit orders in a 40-bit word
+* The order was usually an 8-bit order code and a 12 bit address
+* A program counter with a left-right indicator
 
-## Input / Output
+## Control flow
+* Fetch the order pair at the location specified by the program counter
+* Execute the left order unless it's a control transfer
+* Execute the right order unless it's a control transfer
+* Increment the program counter and repeat
+
+## Control transfers
+* Unconditional: set the program counter to the order address and execute either the left or right order there
+* Conditional: transfer control only if the sign bit of A is positive
+
+## Stops
+* Control transfers could be coded to stop before transfer
+* Stop orders
+* Division overflow detected
+* Unimplemented order code bits
 
 # The software engineering process
 
@@ -172,21 +224,50 @@ DiagrammeR::grViz("aq.gv")
 * Calculus / differential equations
 * Statistics / Monte Carlo
 * Linear algebra / linear equations / eigensystems
+* ["Planning and coding"](http://bitsavers.trailing-edge.com/pdf/ias/Planning_and_Coding_of_Problems_for_an_Electronic_Computing_Instrument_Part_II_Volume_II_Apr48.pdf) has a good introduction to the type of computations
 
 ## Memory layout
+* Since program orders and data words occupy the same memory, you have to lay them out ahead of time
 
-## Assembler / loader
+## Available software
+* [Primitive assemblers / loaders](http://bitsavers.trailing-edge.com/pdf/univOfIllinoisUrbana/illiac/ILLIAC/Active_Library/X12-235_SADOI.pdf) to read in instructions
+* Data input and output routines (decimal-to-binary and binary-to-decimal)
+* Math libraries accessible as closed subroutines
 
-## Run
+## Documentation
+* Best available now is for ILLIAC: _A Guide to ILLIAC Programming_ [@Fosdick1961] 
 
 ## Debugging / post-mortem
+* Memory dumps
+* Breakpoint stops
+* Sometimes lights and switches, single-stepping
 
 # The emulator
 
 ## Existing emulators
-* simh
-* SILLIAC
-* misc
+* [simh](http://simh.trailing-edge.com/)
+    - Open source (<https://github.com/simh/simh>)
+    - Written in C
+    - Doesn't have any IAS machines 
+* [IASSim]()
+    - Open source (http://www.cs.colby.edu/djskrien/IASSim/)
+    - Written in Java
+    - Includes a primitive formula translator
 
-## Why build a new one?
+## My own emulator
+* Work in progress
+* Currently in R
+    - This is surprisingly difficult
+    - R doesn't have a native 64-bit integer type!
+    - So I'm storing 40-bit words in 64-bit floats
+    - Using the `binaryLogic` package to emulate arithmetic unit
+* Target architecture is ILLIAC (best documentation)
+* Will probably abandon R for Julia
 
+## What's working
+* Multiply and divide
+* Post-mortem dump / display
+
+# References
+
+## References {.smaller}
