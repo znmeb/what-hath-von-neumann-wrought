@@ -29,11 +29,12 @@ bibliography: references.bib
 * Object-oriented programming
     - [Simula67](https://en.wikipedia.org/wiki/Simula) (1967), [Smalltalk-80](https://en.wikipedia.org/wiki/Smalltalk) (1980)
 * Functional programming
+    - [LISP](https://en.wikipedia.org/wiki/Lisp_(programming_language)) (1958)
     - [OCaml](https://en.wikipedia.org/wiki/OCaml) (1996), [Haskell](https://en.wikipedia.org/wiki/Haskell_(programming_language)) (1990)
 * Array programming
     - [MATLAB](https://en.wikipedia.org/wiki/MATLAB) (1984), [S](https://en.wikipedia.org/wiki/S_(programming_language)) (1976), [R](https://en.wikipedia.org/wiki/R_(programming_language)) (1994), [APL](https://en.wikipedia.org/wiki/APL_(programming_language)) (1966)
 * Symbolic math
-    - [Maxima](https://en.wikipedia.org/wiki/Maxima_(software)) (1998), [Mathematica](https://en.wikipedia.org/wiki/Mathematica) (1998)
+    - [Macsyma/Maxima](https://en.wikipedia.org/wiki/Maxima_(software)) (1968), [Mathematica](https://en.wikipedia.org/wiki/Mathematica) (1998)
 
 ## What made this explosion of computer science possible?
 * Transistor and magnetic recording technology
@@ -62,7 +63,7 @@ bibliography: references.bib
     - Sorry, you can't Google an error message any more
 * Unix, regular expressions, the shell, pipes, etc.
 * Your programming paradigms
-* But hey, at least you've got FORTRAN and COBOL
+* But hey, at least you've got LISP, FORTRAN and COBOL
 * At least your computer's transistorized
 
 ## April 1957
@@ -79,7 +80,7 @@ bibliography: references.bib
 * Cathode ray tube memory
 * ***Based on the [IAS machine](https://en.wikipedia.org/wiki/IAS_machine)***
 
-## And so, time travelers, we've arrived at our destination
+## And so, time travelers, we've arrived at our destination - 1946
 
 What Hath Von Neumann (and many others) Wrought?
 
@@ -118,7 +119,7 @@ What Hath Von Neumann (and many others) Wrought?
 * Programs and data occupied different regions of the same memory
     - A word could be interpreted as a number, characters, or orders
     - Programs could modify themselves
-    - Programs could interpret other programs!
+    - Programs could interpret programs in other languages!
 
 ## Arithmetic unit
 * A 40-bit accumulator (A)
@@ -275,6 +276,8 @@ DiagrammeR::grViz("aq.gv")
 
 ## Documentation
 * Best available now is for ILLIAC: _A Guide to ILLIAC Programming_ [@Fosdick1961]
+    - Late in the productive life of IAS machines / ILLIAC I
+    - Compares favorably with modern documentation
 
 ## Debugging / post-mortem
 * Memory dumps
@@ -294,7 +297,7 @@ DiagrammeR::grViz("aq.gv")
     - Open source
     - Written in Java
     - Includes a primitive formula translator
-    - Not a full bitwise implementation of any order code
+    - Abstract order code - not a full bitwise implementation of any order code
 
 ## My own emulator
 * Work in progress
@@ -305,7 +308,8 @@ DiagrammeR::grViz("aq.gv")
     - Using the [binaryLogic](https://cran.rstudio.com/web/packages/binaryLogic/index.html) package to emulate arithmetic unit
 * Target architecture is ILLIAC I
 * Will probably abandon R for Julia
-    - Emulate the minimum viable scientific computer with the most advanced scientific computing language!
+    - Julia has 64-bit integers and has macros
+    - Goal: emulate the minimum viable scientific computer with today's most advanced scientific computing language!
 
 ## What's working
 * Add, subtract, multiply and divide
