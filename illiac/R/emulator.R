@@ -235,15 +235,17 @@ display_state <- function(a, q, program_counter, memory) {
 #' print(product$q)}
 #' @export
 illiac_multiply <- function(a, q, r3) {
+  ax <- a
+  qx <- q
   for (i in 1:(.bits - 1)) {
-    if (q[.bits]) {
-      a <- a + r3
+    if (qx[.bits]) {
+      ax <- ax + r3
     }
-    q[3:.bits] <- q[2:(.bits - 1)]
-    q[2] <- a[.bits]
-    a[2:.bits] <- a[1:(.bits - 1)]
+    qx[3:.bits] <- qx[2:(.bits - 1)]
+    qx[2] <- ax[.bits]
+    ax[2:.bits] <- ax[1:(.bits - 1)]
   }
-  return(list(a = a, q = q))
+  return(list(a = ax, q = qx))
 }
 
 #' @title ILLIAC divide
@@ -264,7 +266,7 @@ illiac_multiply <- function(a, q, r3) {
 #' product <- illiac_multiply(a, q, r3)
 #' print(product$a)
 #' print(product$q)
-#' division <- illiac_divide(a, q, r3)
+#' division <- illiac_divide(product$a, product$q, r3)
 #' print(division$a)
 #' print(division$q)}
 #' @export
