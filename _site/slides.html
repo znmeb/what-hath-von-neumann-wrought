@@ -105,7 +105,11 @@
 <li>&quot;If I have seen farther than others, it is because I was standing on the shoulders of giants.&quot; - Isaac Newton</li>
 <li>&quot;If I have not seen as far as others, it is because giants were standing on my shoulders.&quot; - Hal Abelson</li>
 <li>&quot;In computer science, we stand on each other&#39;s feet.&quot; - Brian Reid</li>
-<li>&quot;How many people can stand on the shoulders of a giant before the giant collapses?&quot; - znmeb</li>
+<li>&quot;How many people can stand on the shoulders of a giant before the giant collapses?&quot; - znmeb
+
+<ul class = 'build'>
+<li><a href='https://znmeb.gitlab.io/what-hath-von-neumann-wrought/' title=''>https://znmeb.gitlab.io/what-hath-von-neumann-wrought/</a></li>
+</ul></li>
 </ul>
 
 </article></slide><slide class=''><hgroup><h2>We program today in a rich environment</h2></hgroup><article  id="we-program-today-in-a-rich-environment">
@@ -161,7 +165,13 @@
 
 </article></slide><slide class=''><hgroup><h2>So let&#39;s go back in time to the 1960s - May 25, 1961 - July 20, 1969</h2></hgroup><article  id="so-lets-go-back-in-time-to-the-1960s---may-25-1961---july-20-1969">
 
-<p><a href='https://youtu.be/Kza-iTe2100' title=''>John F. Kennedy&#39;s Moon Speech to Congress - May 25, 1961</a> <a href='https://youtu.be/Kza-iTe2100' title=''>https://youtu.be/Kza-iTe2100</a></p>
+<ul class = 'build'>
+<li><a href='https://youtu.be/Kza-iTe2100' title=''>John F. Kennedy&#39;s Moon Speech to Congress - May 25, 1961</a>
+
+<ul class = 'build'>
+<li><a href='https://youtu.be/Kza-iTe2100' title=''>https://youtu.be/Kza-iTe2100</a></li>
+</ul></li>
+</ul>
 
 </article></slide><slide class=''><hgroup><h2>&lt;rant&gt;</h2></hgroup><article  id="rant">
 
@@ -283,8 +293,8 @@
 
 </article></slide><slide class=''><hgroup><h2>The arithmetic unit</h2></hgroup><article  id="the-arithmetic-unit">
 
-<div id="htmlwidget-3892" style="width:720px;height:432px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-3892">{"x":{"diagram":"digraph  {\n  graph [rankdir = TB]\n  \"Accumulator\" [label = \"Accumulator\", shape = \"rectangle\", width = \"2\"]\n  \"Quotient\" [label = \"Quotient\", shape = \"rectangle\", width = \"2\"]\n  \"Adder\" [label = \"Adder\", shape = \"rectangle\", width = \"2\"]\n  \"R3\" [label = \"R3\", shape = \"rectangle\", width = \"2\"]\n  \"Complement Gate\" [label = \"Complement Gate\", shape = \"rectangle\", width = \"2\"]\n  \"Memory\" [label = \"Memory\", shape = \"rectangle\", width = \"2\"]\n  \"Accumulator\"->\"Quotient\" [style = \"dashed\"]\n  \"Quotient\"->\"Accumulator\" [style = \"dashed\"]\n  \"Accumulator\"->\"Memory\"\n  \"Accumulator\"->\"Adder\"\n  \"Adder\"->\"Accumulator\"\n  \"Memory\"->\"Quotient\"\n  \"Memory\"->\"R3\"\n  \"Quotient\"->\"R3\"\n  \"R3\"->\"Complement Gate\"\n  \"Complement Gate\"->\"Adder\"\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-5968" style="width:720px;height:432px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5968">{"x":{"diagram":"digraph  {\n  graph [rankdir = TB]\n  \"Accumulator\" [label = \"Accumulator\", shape = \"rectangle\", width = \"2\"]\n  \"Quotient\" [label = \"Quotient\", shape = \"rectangle\", width = \"2\"]\n  \"Adder\" [label = \"Adder\", shape = \"rectangle\", width = \"2\"]\n  \"R3\" [label = \"R3\", shape = \"rectangle\", width = \"2\"]\n  \"Complement Gate\" [label = \"Complement Gate\", shape = \"rectangle\", width = \"2\"]\n  \"Memory\" [label = \"Memory\", shape = \"rectangle\", width = \"2\"]\n  \"Accumulator\"->\"Quotient\" [style = \"dashed\"]\n  \"Quotient\"->\"Accumulator\" [style = \"dashed\"]\n  \"Accumulator\"->\"Memory\"\n  \"Accumulator\"->\"Adder\"\n  \"Adder\"->\"Accumulator\"\n  \"Memory\"->\"Quotient\"\n  \"Memory\"->\"R3\"\n  \"Quotient\"->\"R3\"\n  \"R3\"->\"Complement Gate\"\n  \"Complement Gate\"->\"Adder\"\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 </article></slide><slide class=''><hgroup><h2>Fractional fixed-point two&#39;s-complement arithmetic</h2></hgroup><article  id="fractional-fixed-point-twos-complement-arithmetic">
 
@@ -323,8 +333,8 @@
 
 </article></slide><slide class=''><hgroup><h2>The accumulator (A) and quotient register (Q) coupled</h2></hgroup><article  id="the-accumulator-a-and-quotient-register-q-coupled">
 
-<div id="htmlwidget-1886" style="width:720px;height:432px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1886">{"x":{"diagram":"digraph {\ngraph [rankdir = LR]\n  \"Accumulator\" [label = \"Accumulator\", shape = \"rectangle\", width = 2]\n  \"Quotient\" [label = \"Quotient\", shape = \"rectangle\", width = 2]\n  \"Accumulator\"->\"Quotient\" [style = \"dashed\"]\n  \"Quotient\"->\"Accumulator\" [style = \"dashed\"]\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-4256" style="width:720px;height:432px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4256">{"x":{"diagram":"digraph {\ngraph [rankdir = LR]\n  \"Accumulator\" [label = \"Accumulator\", shape = \"rectangle\", width = 2]\n  \"Quotient\" [label = \"Quotient\", shape = \"rectangle\", width = 2]\n  \"Accumulator\"->\"Quotient\" [style = \"dashed\"]\n  \"Quotient\"->\"Accumulator\" [style = \"dashed\"]\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 </article></slide><slide class=''><hgroup><h2>Left Shifting = multiply AQ by two</h2></hgroup><article  id="left-shifting-multiply-aq-by-two">
 
@@ -348,7 +358,7 @@
 <li>Keep original a0 - the sign bit propagates to the right!</li>
 </ol>
 
-</article></slide><slide class=''><hgroup><h2>Adding or Subtracting</h2></hgroup><article  id="adding-or-subtracting">
+</article></slide><slide class=''><hgroup><h2>Adding or Subtracting</h2></hgroup><article  id="adding-or-subtracting" class="smaller">
 
 <ol class = 'build'>
 <li>Augend is in A
@@ -488,10 +498,14 @@
 <li><a href='http://bitsavers.trailing-edge.com/pdf/ias/Planning_and_Coding_of_Problems_for_an_Electronic_Computing_Instrument_Part_II_Volume_II_Apr48.pdf' title=''>&quot;Planning and coding&quot;</a> has a good introduction to the type of computations</li>
 </ul>
 
-</article></slide><slide class=''><hgroup><h2>Potential gotcha</h2></hgroup><article  id="potential-gotcha">
+</article></slide><slide class=''><hgroup><h2>Potential gotchas</h2></hgroup><article  id="potential-gotchas">
 
 <ul class = 'build'>
-<li>Since program orders and data words occupy the same memory, you have to lay them out carefully</li>
+<li>Since program orders and data words occupy the same memory, you have to lay them out carefully
+
+<ul class = 'build'>
+<li>Loop coding errors can overwrite data and code</li>
+</ul></li>
 <li>The numbers have to be scaled correctly since there&#39;s no floating point</li>
 </ul>
 
@@ -552,7 +566,7 @@
 <li>This is surprisingly difficult</li>
 <li>R doesn&#39;t have a native 64-bit integer type!</li>
 <li>So I&#39;m storing 40-bit words in 64-bit floats</li>
-<li>Using the <code>[binaryLogic](https://cran.rstudio.com/web/packages/binaryLogic/index.html)</code> package to emulate arithmetic unit</li>
+<li>Using the <a href='https://cran.rstudio.com/web/packages/binaryLogic/index.html' title=''>binaryLogic</a> package to emulate arithmetic unit</li>
 </ul></li>
 <li>Target architecture is ILLIAC I</li>
 <li>Will probably abandon R for Julia

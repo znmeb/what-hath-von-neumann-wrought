@@ -15,6 +15,7 @@ bibliography: references.bib
 * "If I have not seen as far as others, it is because giants were standing on my shoulders." - Hal Abelson 
 * "In computer science, we stand on each other's feet." - Brian Reid
 * "How many people can stand on the shoulders of a giant before the giant collapses?" - znmeb
+    - <https://znmeb.gitlab.io/what-hath-von-neumann-wrought/>
 
 ## We program today in a rich environment
 * numerous abstract programming paradigms,
@@ -44,7 +45,8 @@ bibliography: references.bib
 * Two languages - FORTRAN and COBOL
 
 ## So let's go back in time to the 1960s - May 25, 1961 - July 20, 1969
-[John F. Kennedy's Moon Speech to Congress - May 25, 1961](https://youtu.be/Kza-iTe2100) <https://youtu.be/Kza-iTe2100>
+* [John F. Kennedy's Moon Speech to Congress - May 25, 1961](https://youtu.be/Kza-iTe2100) 
+    - <https://youtu.be/Kza-iTe2100>
 
 ## \<rant\>
 
@@ -177,7 +179,7 @@ DiagrammeR::grViz("aq.gv")
 5. Shift a0:a38 -> a1:a39
 6. Keep original a0 - the sign bit propagates to the right!
 
-## Adding or Subtracting
+## Adding or Subtracting {.smaller}
 1. Augend is in A
     * Clear A, or
     * Hold A, or
@@ -260,8 +262,9 @@ DiagrammeR::grViz("aq.gv")
 * Linear algebra / linear equations / eigensystems
 * ["Planning and coding"](http://bitsavers.trailing-edge.com/pdf/ias/Planning_and_Coding_of_Problems_for_an_Electronic_Computing_Instrument_Part_II_Volume_II_Apr48.pdf) has a good introduction to the type of computations
 
-## Potential gotcha
+## Potential gotchas
 * Since program orders and data words occupy the same memory, you have to lay them out carefully
+    - Loop coding errors can overwrite data and code
 * The numbers have to be scaled correctly since there's no floating point
 
 ## Available software
@@ -299,7 +302,7 @@ DiagrammeR::grViz("aq.gv")
     - This is surprisingly difficult
     - R doesn't have a native 64-bit integer type!
     - So I'm storing 40-bit words in 64-bit floats
-    - Using the `[binaryLogic](https://cran.rstudio.com/web/packages/binaryLogic/index.html)` package to emulate arithmetic unit
+    - Using the [binaryLogic](https://cran.rstudio.com/web/packages/binaryLogic/index.html) package to emulate arithmetic unit
 * Target architecture is ILLIAC I
 * Will probably abandon R for Julia
     - Emulate the minimum viable scientific computer with the most advanced scientific computing language!
