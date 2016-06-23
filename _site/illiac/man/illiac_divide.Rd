@@ -30,7 +30,7 @@ print(a)
 product <- illiac_multiply(a, q, r3)
 print(product$a)
 print(product$q)
-division <- illiac_divide(a, q, r3)
+division <- illiac_divide(product$a, product$q, r3)
 print(division$a)
 print(division$q)}
 }
