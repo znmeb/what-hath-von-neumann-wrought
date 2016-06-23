@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="M. Edward (Ed) Borasky" />
+  <meta name="dcterms.date" content="2016-06-23" />
+  <title>What Hath Von Neumann Wrought?</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="site_libs/reveal.js-3.2.0/css/reveal.css"/>
+
+
+
+<link rel="stylesheet" href="site_libs/reveal.js-3.2.0/css/theme/simple.css" id="theme">
+
+
+  <!-- some tweaks to reveal css -->
+  <style type="text/css">
+    .reveal h1 { font-size: 2.0em; }
+    .reveal h2 { font-size: 1.5em;  }
+    .reveal h3 { font-size: 1.25em;	}
+    .reveal h4 { font-size: 1em;	}
+
+    .reveal .slides>section,
+    .reveal .slides>section>section {
+      padding: 0px 0px;
+    }
+
+
+
+    .reveal table {
+      border-width: 1px;
+      border-spacing: 2px;
+      border-style: dotted;
+      border-color: gray;
+      border-collapse: collapse;
+      font-size: 0.7em;
+    }
+
+    .reveal table th {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      font-weight: bold;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+    .reveal table td {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+  </style>
+
+    <style type="text/css">code{white-space: pre;}</style>
+
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? 'site_libs/reveal.js-3.2.0/css/print/pdf.css' : 'site_libs/reveal.js-3.2.0/css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+    <!--[if lt IE 9]>
+    <script src="site_libs/reveal.js-3.2.0/lib/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <script src="site_libs/htmlwidgets-0.6/htmlwidgets.js"></script>
+    <script src="site_libs/viz-0.3/viz.js"></script>
+    <link href="site_libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+    <script src="site_libs/grViz-binding-0.8.2/grViz.js"></script>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section>
+    <h1 class="title">What Hath Von Neumann Wrought?</h1>
+    <h2 class="author">M. Edward (Ed) Borasky</h2>
+    <h3 class="date">June 23, 2016</h3>
+</section>
+
+<section><section id="motivation" class="titleslide slide level1"><h1>Motivation</h1></section><section id="standing-on-the-shoulders-of-giants" class="slide level2">
+<h1>Standing on the shoulders of giants</h1>
+<ul>
+<li class="fragment">“If I have seen farther than others, it is because I was standing on the shoulders of giants.” - Isaac Newton</li>
+<li class="fragment">“If I have not seen as far as others, it is because giants were standing on my shoulders.” - Hal Abelson</li>
+<li class="fragment">“In computer science, we stand on each other’s feet.” - Brian Reid</li>
+<li class="fragment">“How many people can stand on the shoulders of a giant before the giant collapses?” - znmeb</li>
+</ul>
+</section><section id="we-program-today-in-a-rich-environment" class="slide level2">
+<h1>We program today in a rich environment</h1>
+<ul>
+<li class="fragment">numerous abstract programming paradigms,</li>
+<li class="fragment">elegant realizations of those paradigms in programming languages,</li>
+<li class="fragment">well-crafted run-times, interpreters and compilers,</li>
+<li class="fragment">distributed version control systems for collaboration,</li>
+<li class="fragment">integrated development environments, and</li>
+<li class="fragment">documentation tools.</li>
+</ul>
+</section><section id="programming-paradigms-mid-1960s-to-the-present" class="slide level2">
+<h1>Programming paradigms (mid 1960s to the present)</h1>
+<ul>
+<li class="fragment">Object-oriented programming
+<ul>
+<li class="fragment"><a href="https://en.wikipedia.org/wiki/Simula">Simula67</a> (1967), <a href="https://en.wikipedia.org/wiki/Smalltalk">Smalltalk-80</a> (1980)</li>
+</ul></li>
+<li class="fragment">Functional programming
+<ul>
+<li class="fragment"><a href="https://en.wikipedia.org/wiki/OCaml">OCaml</a> (1996), <a href="https://en.wikipedia.org/wiki/Haskell_(programming_language)">Haskell</a> (1990)</li>
+</ul></li>
+<li class="fragment">Array programming
+<ul>
+<li class="fragment"><a href="https://en.wikipedia.org/wiki/MATLAB">MATLAB</a> (1984), <a href="https://en.wikipedia.org/wiki/S_(programming_language)">S</a> (1976), <a href="https://en.wikipedia.org/wiki/R_(programming_language)">R</a> (1994), <a href="https://en.wikipedia.org/wiki/APL_(programming_language)">APL</a> (1966)</li>
+</ul></li>
+</ul>
+</section><section id="what-made-all-this-possible" class="slide level2">
+<h1>What made all this possible?</h1>
+<ul>
+<li class="fragment">Transistor logic</li>
+<li class="fragment">Magnetic core random access memory</li>
+<li class="fragment">General-purpose architectures like <a href="https://en.wikipedia.org/wiki/IBM_System/360">System\360</a> (1964)</li>
+</ul>
+</section><section id="and-before-that" class="slide level2">
+<h1>And before that?</h1>
+<ul>
+<li class="fragment">Two kinds of computers - “scientific” and “business”</li>
+<li class="fragment">Two languages - FORTRAN and COBOL</li>
+</ul>
+</section><section id="may-25-1961---july-20-1969" class="slide level2">
+<h1>May 25, 1961 - July 20, 1969</h1>
+<p><a href="https://youtu.be/Kza-iTe2100">John F. Kennedy’s Moon Speech to Congress - May 25, 1961</a></p>
+</section><section id="rant" class="slide level2">
+<h1>&lt;rant&gt;</h1>
+<p><img src="likehell.jpg" /></p>
+</section><section id="like-hell-it-was" class="slide level2">
+<h1>Like Hell It Was!</h1>
+<ul>
+<li class="fragment">By July of 1969, large System\360 mainframes were in use at NASA</li>
+<li class="fragment">Even in 1961, the state of the art was an <a href="https://en.wikipedia.org/wiki/IBM_7090">IBM 7090</a></li>
+<li class="fragment">&lt;/rant&gt;</li>
+</ul>
+</section><section id="ive-taken-away" class="slide level2">
+<h1>I’ve taken away …</h1>
+<ul>
+<li class="fragment">Your IDEs, version control, the Internet
+<ul>
+<li class="fragment">Sorry, you can’t Google an error message any more</li>
+</ul></li>
+<li class="fragment">Your programming paradigms</li>
+<li class="fragment">But hey, at least you’ve got FORTRAN and COBOL</li>
+<li class="fragment">At least your computer’s transistorized</li>
+</ul>
+</section><section id="april-1957" class="slide level2">
+<h1>April 1957</h1>
+<ul>
+<li class="fragment">The first <a href="https://en.wikipedia.org/wiki/Fortran">FORTRAN</a> compiler is delivered …</li>
+<li class="fragment">For the <a href="https://en.wikipedia.org/wiki/IBM_704">IBM 704</a> … a vacuum tube machine</li>
+<li class="fragment">With floating point hardware and index registers</li>
+<li class="fragment">And magnetic core memory</li>
+<li class="fragment">I’m not finished</li>
+</ul>
+</section><section id="april-1952" class="slide level2">
+<h1>April 1952</h1>
+<ul>
+<li class="fragment">The <a href="https://en.wikipedia.org/wiki/IBM_701">IBM 701</a> is announced</li>
+<li class="fragment">No floating point</li>
+<li class="fragment">No index registers</li>
+<li class="fragment">Cathode ray tube memory</li>
+<li class="fragment"><strong><em>Based on the <a href="https://en.wikipedia.org/wiki/IAS_machine">IAS machine</a></em></strong></li>
+</ul>
+</section><section id="and-so-time-travelers-weve-arrived-at-our-destination" class="slide level2">
+<h1>And so, time travelers, we’ve arrived at our destination</h1>
+<p>What Hath Von Neumann (and many others) Wrought?</p>
+</section></section>
+<section><section id="the-ias-machines" class="titleslide slide level1"><h1>The IAS Machines</h1></section><section id="state-of-scientific-computing" class="slide level2">
+<h1>State of scientific computing</h1>
+</section><section id="preliminary-discussions" class="slide level2">
+<h1>Preliminary discussions</h1>
+</section><section id="why-i-made-such-a-big-deal-out-of-floating-point-and-index-registers" class="slide level2">
+<h1>Why I made such a big deal out of floating point and index registers</h1>
+</section><section id="planning-and-coding" class="slide level2">
+<h1>Planning and coding</h1>
+</section><section id="hardware" class="slide level2">
+<h1>Hardware</h1>
+<ul>
+<li class="fragment">MANIAC</li>
+<li class="fragment">JOHNNIAC</li>
+<li class="fragment">ILLIAC and copies</li>
+</ul>
+</section></section>
+<section><section id="the-architecture" class="titleslide slide level1"><h1>The architecture</h1></section><section id="arithmetic-unit" class="slide level2">
+<h1>Arithmetic unit</h1>
+<div id="htmlwidget-1483" style="width:768px;height:576px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1483">{"x":{"diagram":"digraph  {\n  graph [rankdir = TB]\n  \"Accumulator\" [label = \"Accumulator\", shape = \"rectangle\", width = \"2\"]\n  \"Quotient\" [label = \"Quotient\", shape = \"rectangle\", width = \"2\"]\n  \"Adder\" [label = \"Adder\", shape = \"rectangle\", width = \"2\"]\n  \"R3\" [label = \"R3\", shape = \"rectangle\", width = \"2\"]\n  \"Complement Gate\" [label = \"Complement Gate\", shape = \"rectangle\", width = \"2\"]\n  \"Memory\" [label = \"Memory\", shape = \"rectangle\", width = \"2\"]\n  \"Accumulator\"->\"Quotient\" [style = \"dashed\"]\n  \"Quotient\"->\"Accumulator\" [style = \"dashed\"]\n  \"Accumulator\"->\"Memory\"\n  \"Accumulator\"->\"Adder\"\n  \"Adder\"->\"Accumulator\"\n  \"Memory\"->\"Quotient\"\n  \"Memory\"->\"R3\"\n  \"Quotient\"->\"R3\"\n  \"R3\"->\"Complement Gate\"\n  \"Complement Gate\"->\"Adder\"\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+</section><section id="the-accumulator-a-and-quotient-register-q-coupled" class="slide level2">
+<h1>The accumulator (A) and quotient register (Q) coupled</h1>
+<div id="htmlwidget-9913" style="width:768px;height:576px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9913">{"x":{"diagram":"digraph {\ngraph [rankdir = LR]\n  \"Accumulator\" [label = \"Accumulator\", shape = \"rectangle\", width = 2]\n  \"Quotient\" [label = \"Quotient\", shape = \"rectangle\", width = 2]\n  \"Accumulator\"->\"Quotient\" [style = \"dashed\"]\n  \"Quotient\"->\"Accumulator\" [style = \"dashed\"]\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+</section><section id="left-shifting-multiply-aq-by-two" class="slide level2">
+<h1>Left Shifting = multiply AQ by two</h1>
+<ol type="1">
+<li class="fragment">Shift a0 -&gt; bit bucket</li>
+<li class="fragment">Shift a1:a39 -&gt; a0:a38</li>
+<li class="fragment">Leave q0 alone!</li>
+<li class="fragment">Shift q1 -&gt; a39</li>
+<li class="fragment">Shift q2:q39 -&gt; q1:q38</li>
+<li class="fragment">Zero -&gt; q39</li>
+</ol>
+</section><section id="right-shifting-divide-aq-by-two" class="slide level2">
+<h1>Right Shifting = divide AQ by two</h1>
+<ol type="1">
+<li class="fragment">Shift q39 -&gt; bit bucket</li>
+<li class="fragment">Shift q1:q38 -&gt; q2:q39</li>
+<li class="fragment">Leave q0 alone!</li>
+<li class="fragment">Shift a39 -&gt; q1</li>
+<li class="fragment">Shift a0:a38 -&gt; a1:a39</li>
+<li class="fragment">Keep original a0!</li>
+</ol>
+</section><section id="adding" class="slide level2">
+<h1>Adding</h1>
+<ol type="1">
+<li class="fragment">Augend
+<ul>
+<li class="fragment">Clear A, or</li>
+<li class="fragment">Hold A, or</li>
+<li class="fragment">Set A = 1/2</li>
+</ul></li>
+<li class="fragment">Addend
+<ul>
+<li class="fragment">Memory word or Q to R3, then</li>
+</ul></li>
+<li class="fragment">Complement gate
+<ul>
+<li class="fragment">Pass straight through, or</li>
+<li class="fragment">Negate, or</li>
+<li class="fragment">Absolute value</li>
+</ul></li>
+<li class="fragment">Form sum in A</li>
+</ol>
+</section><section id="multiplication-initialization" class="slide level2">
+<h1>Multiplication: initialization</h1>
+<ol type="1">
+<li class="fragment">Multiplier is in Q</li>
+<li class="fragment">Multiplicand is in R3</li>
+<li class="fragment">Accumulator
+<ul>
+<li class="fragment">Clear A, or</li>
+<li class="fragment">Hold A, or</li>
+<li class="fragment">Set A = 1/2</li>
+</ul></li>
+<li class="fragment">Complement gate
+<ul>
+<li class="fragment">Pass straight through, or</li>
+<li class="fragment">Negate, or</li>
+<li class="fragment">Absolute value</li>
+</ul></li>
+</ol>
+</section><section id="multiplication-iteration" class="slide level2">
+<h1>Multiplication: iteration</h1>
+<p>39 steps of</p>
+<ul>
+<li class="fragment">A &lt;- A + Complement gate</li>
+<li class="fragment">Shift AQ right one bit</li>
+</ul>
+</section><section id="dividing" class="slide level2">
+<h1>Dividing</h1>
+<ol type="1">
+<li class="fragment">Double-length dividend in AQ</li>
+<li class="fragment">Divisor is in R3</li>
+<li class="fragment">39 steps of
+<ul>
+<li class="fragment">subtract R3 from A in the adder</li>
+<li class="fragment">if the result is less than zero, set q39 to 0</li>
+<li class="fragment">if the result is greater than or equal to zero, set q39 to 1 and copy the difference to A</li>
+<li class="fragment">shift AQ left one place, copying q1 into q0</li>
+</ul></li>
+<li class="fragment">Set q39 to 1 for rounding</li>
+</ol>
+</section><section id="control" class="slide level2">
+<h1>Control</h1>
+</section><section id="input-output" class="slide level2">
+<h1>Input / Output</h1>
+</section></section>
+<section><section id="the-software-engineering-process" class="titleslide slide level1"><h1>The software engineering process</h1></section><section id="algorithms" class="slide level2">
+<h1>Algorithms</h1>
+<ul>
+<li class="fragment">Calculus / differential equations</li>
+<li class="fragment">Statistics / Monte Carlo</li>
+<li class="fragment">Linear algebra / linear equations / eigensystems</li>
+</ul>
+</section><section id="memory-layout" class="slide level2">
+<h1>Memory layout</h1>
+</section><section id="assembler-loader" class="slide level2">
+<h1>Assembler / loader</h1>
+</section><section id="run" class="slide level2">
+<h1>Run</h1>
+</section><section id="debugging-post-mortem" class="slide level2">
+<h1>Debugging / post-mortem</h1>
+</section></section>
+<section><section id="the-emulator" class="titleslide slide level1"><h1>The emulator</h1></section><section id="existing-emulators" class="slide level2">
+<h1>Existing emulators</h1>
+<ul>
+<li class="fragment">simh</li>
+<li class="fragment">SILLIAC</li>
+<li class="fragment">misc</li>
+</ul>
+</section><section id="why-build-a-new-one" class="slide level2">
+<h1>Why build a new one?</h1>
+</section></section>
+    </div>
+  </div>
+
+  <script src="site_libs/reveal.js-3.2.0/lib/js/head.min.js"></script>
+  <script src="site_libs/reveal.js-3.2.0/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Vertical centering of slides
+        center: false,
+        // Transition style
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'default', // none/fade/slide/convex/concave/zoom
+
+        // Optional reveal.js plugins
+        dependencies: []
+      });
+    </script>
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+<script>
+  (function() {
+    if (window.jQuery) {
+      Reveal.addEventListener( 'slidechanged', function(event) {  
+        window.jQuery(event.previousSlide).trigger('hidden');
+        window.jQuery(event.currentSlide).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+
+  </body>
+</html>

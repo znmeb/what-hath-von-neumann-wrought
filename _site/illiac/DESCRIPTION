@@ -1,0 +1,11 @@
+Package: illiac
+Type: Package
+Title: Emulator for ILLIAC (I)
+Version: 0.0.0.9999
+Author: M. Edward (Ed) Borasky
+Maintainer: M. Edward (Ed) Borasky <znmeb@znmeb.net>
+Description: The "illiac" package is an emulator for the ILLIAC I.
+License: AGPL-3
+LazyData: TRUE
+RoxygenNote: 5.0.1
+Imports: binaryLogic

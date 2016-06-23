@@ -1,0 +1,13 @@
+digraph {
+graph [rankdir = TB]
+  'Accumulator' [label = 'Accumulator', shape = 'rectangle', width = 2]
+  'Adder' [label = 'Adder', shape = 'rectangle', width = 2]
+  'R3' [label = 'R3', shape = 'rectangle', width = 2]
+  'Quotient' [label = 'Quotient', shape = 'rectangle', width = 2]
+  'Memory' [label = 'Memory', shape = 'rectangle', width = 2]
+  'R3'->'Adder' [label = "addend"] [fontsize = 9] [fontname = "monospace"]
+  'Accumulator'->'Adder' [label = "augend"] [fontsize = 9] [fontname = "monospace"]
+  'Adder'->'Accumulator' [label = "sum"] [fontsize = 9] [fontname = "monospace"]
+  'Quotient'->'R3'
+  'Memory'->'R3'
+}
