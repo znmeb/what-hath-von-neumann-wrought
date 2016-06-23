@@ -1,0 +1,19 @@
+digraph  {
+  graph [rankdir = TB]
+  'Accumulator' [label = 'Accumulator', shape = 'rectangle', width = '2']
+  'Quotient' [label = 'Quotient', shape = 'rectangle', width = '2']
+  'Adder' [label = 'Adder', shape = 'rectangle', width = '2']
+  'R3' [label = 'R3', shape = 'rectangle', width = '2']
+  'Complement Gate' [label = 'Complement Gate', shape = 'rectangle', width = '2']
+  'Memory' [label = 'Memory', shape = 'rectangle', width = '2']
+  'Accumulator'->'Quotient' [style = 'dashed']
+  'Quotient'->'Accumulator' [style = 'dashed']
+  'Accumulator'->'Memory'
+  'Accumulator'->'Adder'
+  'Adder'->'Accumulator'
+  'Memory'->'Quotient'
+  'Memory'->'R3'
+  'Quotient'->'R3'
+  'R3'->'Complement Gate'
+  'Complement Gate'->'Adder'
+}

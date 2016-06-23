@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<!-- patched version of R Markdown "rmd/h/default.html" template to make an h-entry -->
+<!-- see 
+https://github.com/kevinmarks/pandoc-templates/commit/8992972867658ea1ae43070b3509a123069c5505
+-->
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="M. Edward (Ed) Borasky znmeb@znmeb.net" />
+
+<meta name="date" content="2016-06-23" />
+
+<title>What Hath Von Neumann Wrought?</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">What Hath Von Neumann Wrought?</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="slides.html">Slides</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="h-entry">
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="p-name title toc-ignore">What Hath Von Neumann Wrought?</h1>
+<h4 class="p-author author h-card" href="https://www.znmeb.mobi"><em>M. Edward (Ed) Borasky <a href="mailto:znmeb@znmeb.net">znmeb@znmeb.net</a></em></h4>
+<h4 class="dt-published date"><em>2016-06-23</em></h4>
+
+</div>
+
+
+<div class="e-content">
+<p>We program today in a rich environment:</p>
+<ul>
+<li>numerous abstract programming paradigms,</li>
+<li>elegant realizations of those paradigms in programming languages,</li>
+<li>well-crafted run-times, interpreters and compilers,</li>
+<li>distributed version control systems for collaboration,</li>
+<li>integrated development environments, and</li>
+<li>documentation tools.</li>
+</ul>
+<p>We celebrate the pioneers of programming languages: <a href="https://en.wikipedia.org/wiki/Grace_Hopper">Grace Hopper</a> (<a href="https://en.wikipedia.org/wiki/COBOL">COBOL</a>), <a href="https://en.wikipedia.org/wiki/John_Backus">John Backus</a> (<a href="https://en.wikipedia.org/wiki/Fortran">FORTRAN</a>), <a href="https://en.wikipedia.org/wiki/John_McCarthy_(computer_scientist)">John McCarthy</a> (<a href="https://en.wikipedia.org/wiki/Lisp_(programming_language)">LISP</a>), <a href="https://en.wikipedia.org/wiki/Kenneth_E._Iverson">Kenneth Iverson</a> (<a href="https://en.wikipedia.org/wiki/APL_(programming_language)">APL</a>), <a href="https://en.wikipedia.org/wiki/Peter_Naur">Peter Naur</a> (<a href="https://en.wikipedia.org/wiki/ALGOL">ALGOL</a>) and many others. But how did people program before programming languages?</p>
+<p>I’m going to take you back to that time – specifically, to the <a href="https://en.wikipedia.org/wiki/Von_Neumann_architecture">Von Neumann machine</a>. I’ll tell you a little bit about <a href="https://en.wikipedia.org/wiki/John_von_Neumann">Von Neumann</a> himself, and then describe the Von Neumann machine and its language.</p>
+<p>The Von Neumann architecture is both phenomenally simple and profoundly revolutionary. Because it’s so simple, it’s easy to build an emulator. With that emulator, I’ll show you how to write a simple program on a Von Neumann machine.</p>
+</div>
+</div>
+
+<hr></hr>
+<iframe src="https://duckduckgo.com/search.html?width=224&site=https://www.znmeb.mobi,https://www.masteringdfsanalytics.com/&prefill=Search site&bgcolor=FFFFFF" style="overflow:hidden;margin:0;padding:0;width:282px;height:40px;" frameborder="0"></iframe>
+<hr></hr>
+<p class="h-card">
+  <a class="p-name u-url" href="https://www.znmeb.mobi">M. Edward (Ed) Borasky</a> |
+  <a class="u-email" href="mailto:znmeb@znmeb.net">(znmeb@znmeb.net)</a> |
+  <a class="u-url" href="https://twitter.com/znmeb" rel="me">@znmeb on Twitter</a>
+</p>
+<link rel="webmention" href="https://webmention.io/www.znmeb.mobi/webmention" />
+<hr></hr>
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Borasky Research Journal</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://www.znmeb.mobi" property="cc:attributionName" rel="cc:attributionURL">M. Edward (Ed) Borasky</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+
+</body>
+</html>

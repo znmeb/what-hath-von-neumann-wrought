@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>What Hath Von Neumann Wrought?</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="generator" content="pandoc" />
+
+
+
+  <meta name="date" content="2016-06-23" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <link rel="stylesheet" media="all" href="site_libs/ioslides-13.5.1/fonts/fonts.css">
+
+  <link rel="stylesheet" media="all" href="site_libs/ioslides-13.5.1/theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="site_libs/ioslides-13.5.1/theme/css/phone.css">
+
+  <base target="_blank">
+
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      // Slide settings
+      settings: {
+                title: 'What Hath Von Neumann Wrought?',
+                        useBuilds: true,
+        usePrettify: true,
+        enableSlideAreas: true,
+        enableTouch: true,
+                      },
+
+      // Author information
+      presenters: [
+            {
+        name:  'M. Edward (Ed) Borasky' ,
+        company: '',
+        gplus: '',
+        twitter: '',
+        www: '',
+        github: ''
+      },
+            ]
+    };
+  </script>
+
+  <style type="text/css">
+
+    b, strong {
+      font-weight: bold;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    slides > slide {
+      -webkit-transition: all 0.4s ease-in-out;
+      -moz-transition: all 0.4s ease-in-out;
+      -o-transition: all 0.4s ease-in-out;
+      transition: all 0.4s ease-in-out;
+    }
+
+    .auto-fadein {
+      -webkit-transition: opacity 0.6s ease-in;
+      -webkit-transition-delay: 0.4s;
+      -moz-transition: opacity 0.6s ease-in 0.4s;
+      -o-transition: opacity 0.6s ease-in 0.4s;
+      transition: opacity 0.6s ease-in 0.4s;
+      opacity: 0;
+    }
+
+  </style>
+
+
+  <script src="site_libs/htmlwidgets-0.6/htmlwidgets.js"></script>
+  <script src="site_libs/viz-0.3/viz.js"></script>
+  <link href="site_libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+  <script src="site_libs/grViz-binding-0.8.2/grViz.js"></script>
+
+</head>
+
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+        <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+            <p style="margin-top: 6px; margin-left: -2px;">June 23, 2016</p>
+          </hgroup>
+  </slide>
+
+<slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Introduction</h2></hgroup><article  id="introduction">
+
+</article></slide><slide class=''><hgroup><h2>Standing on the shoulders of giants</h2></hgroup><article  id="standing-on-the-shoulders-of-giants">
+
+<ul class = 'build'>
+<li>&quot;If I have seen farther than others, it is because I was standing on the shoulders of giants.&quot; - Isaac Newton</li>
+<li>&quot;If I have not seen as far as others, it is because giants were standing on my shoulders.&quot; - Hal Abelson</li>
+<li>&quot;In computer science, we stand on each other&#39;s feet.&quot; - Brian Reid</li>
+<li>&quot;How many people can stand on the shoulders of a giant before the giant collapses?&quot; - znmeb</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>We program today in a rich environment</h2></hgroup><article  id="we-program-today-in-a-rich-environment">
+
+<ul class = 'build'>
+<li>numerous abstract programming paradigms,</li>
+<li>elegant realizations of those paradigms in programming languages,</li>
+<li>well-crafted run-times, interpreters and compilers,</li>
+<li>distributed version control systems for collaboration,</li>
+<li>integrated development environments, and</li>
+<li>documentation tools.</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Programming paradigms (mid 1960s to the present)</h2></hgroup><article  id="programming-paradigms-mid-1960s-to-the-present">
+
+<ul class = 'build'>
+<li>Object-oriented programming
+
+<ul class = 'build'>
+<li><a href='https://en.wikipedia.org/wiki/Simula' title=''>Simula67</a> (1967), <a href='https://en.wikipedia.org/wiki/Smalltalk' title=''>Smalltalk-80</a> (1980)</li>
+</ul></li>
+<li>Functional programming
+
+<ul class = 'build'>
+<li><a href='https://en.wikipedia.org/wiki/OCaml' title=''>OCaml</a> (1996), <a href='https://en.wikipedia.org/wiki/Haskell_(programming_language)' title=''>Haskell</a> (1990)</li>
+</ul></li>
+<li>Array programming
+
+<ul class = 'build'>
+<li><a href='https://en.wikipedia.org/wiki/MATLAB' title=''>MATLAB</a> (1984), <a href='https://en.wikipedia.org/wiki/S_(programming_language)' title=''>S</a> (1976), <a href='https://en.wikipedia.org/wiki/R_(programming_language)' title=''>R</a> (1994), <a href='https://en.wikipedia.org/wiki/APL_(programming_language)' title=''>APL</a> (1966)</li>
+</ul></li>
+<li>Symbolic math
+
+<ul class = 'build'>
+<li><a href='https://en.wikipedia.org/wiki/Maxima_(software)' title=''>Maxima</a> (1998), <a href='https://en.wikipedia.org/wiki/Mathematica' title=''>Mathematica</a> (1998)</li>
+</ul></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>What made this explosion of computer science possible?</h2></hgroup><article  id="what-made-this-explosion-of-computer-science-possible">
+
+<ul class = 'build'>
+<li>Transistor and magnetic recording technology</li>
+<li>Magnetic core random access memory</li>
+<li>General-purpose architectures like <a href='https://en.wikipedia.org/wiki/IBM_System/360' title=''>System\360</a> (1964)</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>And before that?</h2></hgroup><article  id="and-before-that">
+
+<ul class = 'build'>
+<li>Two kinds of computers - &quot;scientific&quot; and &quot;business&quot;</li>
+<li>Two languages - FORTRAN and COBOL</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>So let&#39;s go back in time to the 1960s - May 25, 1961 - July 20, 1969</h2></hgroup><article  id="so-lets-go-back-in-time-to-the-1960s---may-25-1961---july-20-1969">
+
+<p><a href='https://youtu.be/Kza-iTe2100' title=''>John F. Kennedy&#39;s Moon Speech to Congress - May 25, 1961</a> <a href='https://youtu.be/Kza-iTe2100' title=''>https://youtu.be/Kza-iTe2100</a></p>
+
+</article></slide><slide class=''><hgroup><h2>&lt;rant&gt;</h2></hgroup><article  id="rant">
+
+<img src='likehell.jpg' title='fig:'/>
+
+</article></slide><slide class=''><hgroup><h2>Like Hell It Was!</h2></hgroup><article  id="like-hell-it-was">
+
+<ul class = 'build'>
+<li>By July of 1969, large System\360 mainframes were in use at NASA</li>
+<li>Even in 1961, the state of the art was an <a href='https://en.wikipedia.org/wiki/IBM_7090' title=''>IBM 7090</a></li>
+<li>&lt;/rant&gt;</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>As we go back in time, I&#39;ve taken away &#8230;</h2></hgroup><article  id="as-we-go-back-in-time-ive-taken-away-...">
+
+<ul class = 'build'>
+<li>Your IDEs, version control, the Internet
+
+<ul class = 'build'>
+<li>Sorry, you can&#39;t Google an error message any more</li>
+</ul></li>
+<li>Unix, regular expressions, the shell, pipes, etc.</li>
+<li>Your programming paradigms</li>
+<li>But hey, at least you&#39;ve got FORTRAN and COBOL</li>
+<li>At least your computer&#39;s transistorized</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>April 1957</h2></hgroup><article  id="april-1957">
+
+<ul class = 'build'>
+<li>The first <a href='https://en.wikipedia.org/wiki/Fortran' title=''>FORTRAN</a> compiler is delivered &#8230;</li>
+<li>For the <a href='https://en.wikipedia.org/wiki/IBM_704' title=''>IBM 704</a> &#8230; a vacuum tube machine</li>
+<li>With floating point hardware and index registers</li>
+<li>And magnetic core memory</li>
+<li>But I&#39;m not finished taking stuff away &#8230;</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>April 1952</h2></hgroup><article  id="april-1952">
+
+<ul class = 'build'>
+<li>The <a href='https://en.wikipedia.org/wiki/IBM_701' title=''>IBM 701</a> is announced</li>
+<li>No floating point</li>
+<li>No index registers</li>
+<li>Cathode ray tube memory</li>
+<li><strong><em>Based on the <a href='https://en.wikipedia.org/wiki/IAS_machine' title=''>IAS machine</a></em></strong></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>And so, time travelers, we&#39;ve arrived at our destination</h2></hgroup><article  id="and-so-time-travelers-weve-arrived-at-our-destination">
+
+<p>What Hath Von Neumann (and many others) Wrought?</p>
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>The IAS machines</h2></hgroup><article  id="the-ias-machines">
+
+</article></slide><slide class=''><hgroup><h2>More of a plan than a full logical design</h2></hgroup><article  id="more-of-a-plan-than-a-full-logical-design">
+
+<ul class = 'build'>
+<li>Numerous implementations &#8230; see <a href='https://en.wikipedia.org/wiki/IAS_machine' title=''>IAS machine</a> for a list</li>
+<li>In what follows I&#39;ll mostly refer to <a href='https://en.wikipedia.org/wiki/ILLIAC_I' title=''>ILLIAC I</a> for details</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Some books for historical perspective</h2></hgroup><article  id="some-books-for-historical-perspective">
+
+<ul class = 'build'>
+<li><em>John Von Neumann: The Scientific Genius who Pioneered the Modern Computer, Game Theory, Nuclear Deterrence, and Much More</em> <span class="cite">(Macrae 2000)</span></li>
+<li><em>The Computer from Pascal to von Neumann</em> <span class="cite">(H. Goldstine 2008)</span></li>
+<li><em>Turing&#39;s Cathedral</em> <span class="cite">(Dyson 2012)</span></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>It all started with &#8230;</h2></hgroup><article  id="it-all-started-with-...">
+
+<p><a href='http://grch.com.ar/docs/p1/Apuntes/eng/Logical%20Design%20of%20an%20Electronic%20Computing%20Instrument.pdf' title=''>&quot;Preliminary Discussion of the Logical Design of an Electronic Computing Instrument&quot;</a> <span class="cite">(Burks and Neumann 1946)</span>.</p>
+
+<ul class = 'build'>
+<li>That defined the architecture and a plan for the hardware.</li>
+<li>Engineers in many cases followed the plan with some modifications.</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>And the software?</h2></hgroup><article  id="and-the-software">
+
+<p><a href='http://bitsavers.trailing-edge.com/pdf/ias/Planning_and_Coding_of_Problems_for_an_Electronic_Computing_Instrument_Part_II_Volume_II_Apr48.pdf' title=''>&quot;Planning and coding of problems for an electronic computing instrument&quot;</a> <span class="cite">(Goldstine Herman H. and Neumann 1948)</span></p>
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>The architecture</h2></hgroup><article  id="the-architecture">
+
+</article></slide><slide class=''><hgroup><h2>The memory</h2></hgroup><article  id="the-memory">
+
+<ul class = 'build'>
+<li>4096 words of &quot;Selectron&quot; memory in the original design</li>
+<li>Words were binary, 40 bits each</li>
+<li>Some implementations had fewer words; for example ILLIAC only had 1024</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Key concepts</h2></hgroup><article  id="key-concepts">
+
+<ul class = 'build'>
+<li>Parallel fetch and store of entire words from memory</li>
+<li>Random access memory</li>
+<li>Parallel addition / subtraction</li>
+<li>Multiplication and division in hardware</li>
+<li>Programs and data occupied different regions of the same memory
+
+<ul class = 'build'>
+<li>A word could be interpreted as a number, characters, or orders</li>
+<li>Programs could modify themselves</li>
+<li>Programs could interpret other programs!</li>
+</ul></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Arithmetic unit</h2></hgroup><article  id="arithmetic-unit">
+
+<ul class = 'build'>
+<li>A 40-bit accumulator (A)</li>
+<li>A 40-bit multiplier-quotient register (Q)</li>
+<li>A 40-bit memory data register, called R3</li>
+<li>A 40-bit complement gate</li>
+<li>A 40-bit adder</li>
+<li>We number bits from left to right starting at 0</li>
+<li>Left-most bit of A is a0 and right-most is a39, etc.</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>The arithmetic unit</h2></hgroup><article  id="the-arithmetic-unit">
+
+<div id="htmlwidget-8451" style="width:720px;height:432px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-8451">{"x":{"diagram":"digraph  {\n  graph [rankdir = TB]\n  \"Accumulator\" [label = \"Accumulator\", shape = \"rectangle\", width = \"2\"]\n  \"Quotient\" [label = \"Quotient\", shape = \"rectangle\", width = \"2\"]\n  \"Adder\" [label = \"Adder\", shape = \"rectangle\", width = \"2\"]\n  \"R3\" [label = \"R3\", shape = \"rectangle\", width = \"2\"]\n  \"Complement Gate\" [label = \"Complement Gate\", shape = \"rectangle\", width = \"2\"]\n  \"Memory\" [label = \"Memory\", shape = \"rectangle\", width = \"2\"]\n  \"Accumulator\"->\"Quotient\" [style = \"dashed\"]\n  \"Quotient\"->\"Accumulator\" [style = \"dashed\"]\n  \"Accumulator\"->\"Memory\"\n  \"Accumulator\"->\"Adder\"\n  \"Adder\"->\"Accumulator\"\n  \"Memory\"->\"Quotient\"\n  \"Memory\"->\"R3\"\n  \"Quotient\"->\"R3\"\n  \"R3\"->\"Complement Gate\"\n  \"Complement Gate\"->\"Adder\"\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+
+</article></slide><slide class=''><hgroup><h2>Fractional fixed-point two&#39;s-complement arithmetic</h2></hgroup><article  id="fractional-fixed-point-twos-complement-arithmetic">
+
+<ul class = 'build'>
+<li>Most arithmetic assumed numbers were two&#39;s-complement fractions</li>
+<li>Left-most bit is the sign
+
+<ul class = 'build'>
+<li>sign of 1 is less than zero</li>
+<li>sign of 0 is greater than or equal to zero</li>
+</ul></li>
+<li>Radix point is between bits 0 and 1</li>
+<li>A sign bit (leftmost bit) and 39 bits of precision = 40 bits</li>
+<li>About 12 decimal digits of precision!</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Examples</h2></hgroup><article  id="examples">
+
+<ul class = 'build'>
+<li>Smallest number (hexadecimal): 80000 00000 (-1)</li>
+<li>Largest number (hexadecimal): 7FFFF FFFFF (+1 - 2 ^ -39)</li>
+<li>1/2 = 40000 00000</li>
+<li>-1/2 = C0000 00000</li>
+<li>2 ^ -39 = 00000 00001</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Double-precision</h2></hgroup><article  id="double-precision">
+
+<ul class = 'build'>
+<li>Some operations treated A and Q as the most and least significant parts of a fraction with a sign and 78 bits of precision</li>
+<li>The left-most bit of A (a0) is the sign bit</li>
+<li>The left-most bit of Q (q0) is ignored</li>
+<li>Multiplying two single-precision numbers could produce a double-precision product</li>
+<li>Dividing a double-precision dividend by a single-precision divisor produced a single-precision quotient</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>The accumulator (A) and quotient register (Q) coupled</h2></hgroup><article  id="the-accumulator-a-and-quotient-register-q-coupled">
+
+<div id="htmlwidget-4753" style="width:720px;height:432px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4753">{"x":{"diagram":"digraph {\ngraph [rankdir = LR]\n  \"Accumulator\" [label = \"Accumulator\", shape = \"rectangle\", width = 2]\n  \"Quotient\" [label = \"Quotient\", shape = \"rectangle\", width = 2]\n  \"Accumulator\"->\"Quotient\" [style = \"dashed\"]\n  \"Quotient\"->\"Accumulator\" [style = \"dashed\"]\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+
+</article></slide><slide class=''><hgroup><h2>Left Shifting = multiply AQ by two</h2></hgroup><article  id="left-shifting-multiply-aq-by-two">
+
+<ol class = 'build'>
+<li>bit bucket &lt;- a0</li>
+<li>Shift a0:a38 &lt;- a1:a39</li>
+<li>Leave q0 alone!</li>
+<li>Shift a39 &lt;- q1</li>
+<li>Shift q1:q38 &lt;- q2:q39</li>
+<li>q39 &lt;- 0</li>
+</ol>
+
+</article></slide><slide class=''><hgroup><h2>Right Shifting = divide AQ by two</h2></hgroup><article  id="right-shifting-divide-aq-by-two">
+
+<ol class = 'build'>
+<li>Shift q39 -&gt; bit bucket</li>
+<li>Shift q1:q38 -&gt; q2:q39</li>
+<li>Leave q0 alone!</li>
+<li>Shift a39 -&gt; q1</li>
+<li>Shift a0:a38 -&gt; a1:a39</li>
+<li>Keep original a0 - the sign bit propagates to the right!</li>
+</ol>
+
+</article></slide><slide class=''><hgroup><h2>Adding or Subtracting</h2></hgroup><article  id="adding-or-subtracting">
+
+<ol class = 'build'>
+<li>Augend is in A
+
+<ul class = 'build'>
+<li>Clear A, or</li>
+<li>Hold A, or</li>
+</ul></li>
+<li>Addend
+
+<ul class = 'build'>
+<li>Memory word or Q to R3, then</li>
+</ul></li>
+<li>Complement gate
+
+<ul class = 'build'>
+<li>Pass straight through, or</li>
+<li>Negate, or</li>
+<li>Absolute value, or</li>
+<li>Negative absolute value</li>
+</ul></li>
+<li>Form sum in A</li>
+</ol>
+
+</article></slide><slide class=''><hgroup><h2>Sample program</h2></hgroup><article  id="sample-program">
+
+<ul class = 'build'>
+<li>0L: Clear-add 100</li>
+<li>0R: Hold add 101</li>
+<li>1L: Store A 102</li>
+<li>1R: Stop</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Multiplication: initialization</h2></hgroup><article  id="multiplication-initialization">
+
+<ol class = 'build'>
+<li>Multiplier is in Q</li>
+<li>Multiplicand is in R3</li>
+<li>Accumulator
+
+<ul class = 'build'>
+<li>Clear A (full multiply -&gt; AQ), or</li>
+<li>Set A = 1/2 (rounded multiply - A)</li>
+</ul></li>
+<li>Complement gate
+
+<ul class = 'build'>
+<li>Pass straight through, or</li>
+<li>Negate, or</li>
+<li>Absolute value, or</li>
+<li>Negative absolute value</li>
+</ul></li>
+</ol>
+
+</article></slide><slide class=''><hgroup><h2>Multiplication: iteration</h2></hgroup><article  id="multiplication-iteration">
+
+<p>39 steps of</p>
+
+<ul class = 'build'>
+<li>If q39 = 1: A &lt;- A + Complement gate</li>
+<li>Shift AQ right one bit</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Division</h2></hgroup><article  id="division">
+
+<ol class = 'build'>
+<li>Start with double-precision dividend in AQ</li>
+<li>Divisor is in R3</li>
+<li>39 steps of
+
+<ul class = 'build'>
+<li>subtract R3 from A in the adder</li>
+<li>if the result is less than zero, set q39 to 0</li>
+<li>if the result is greater than or equal to zero, set q39 to 1 <em>and</em> copy the result to A</li>
+<li>shift AQ left one place, <em>copying q1 into q0</em></li>
+</ul></li>
+<li>Set q39 to 1 for rounding
+
+<ul class = 'build'>
+<li>The &quot;von Neumann rounding&quot;</li>
+</ul></li>
+</ol>
+
+</article></slide><slide class=''><hgroup><h2>Control</h2></hgroup><article  id="control">
+
+<ul class = 'build'>
+<li>Two 20-bit orders in a 40-bit word</li>
+<li>The order was usually an 8-bit order code and a 12 bit address</li>
+<li>Sometimes less than 8 bits of order or 12 bits of address with unused bits</li>
+<li>A program counter with a left-right indicator</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Control flow</h2></hgroup><article  id="control-flow">
+
+<ul class = 'build'>
+<li>Fetch the order pair at the location specified by the program counter</li>
+<li>Execute the left order unless it&#39;s a control transfer</li>
+<li>Execute the right order unless it&#39;s a control transfer</li>
+<li>Increment the program counter and repeat</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Control transfers</h2></hgroup><article  id="control-transfers">
+
+<ul class = 'build'>
+<li>Unconditional:
+
+<ul class = 'build'>
+<li>transfer to the left-hand order at address n</li>
+<li>transfer to the right-hand order at address n</li>
+</ul></li>
+<li>Conditional:
+
+<ul class = 'build'>
+<li>if the sign of A is positive, transfer to the left-hand order at address n</li>
+<li>if the sign of A is positive, transfer to the right-hand order at address n</li>
+<li>if the sign of A is negative, don&#39;t transfer</li>
+</ul></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Stops</h2></hgroup><article  id="stops">
+
+<ul class = 'build'>
+<li>Control transfers could be coded to stop before transfer</li>
+<li>Stop orders</li>
+<li>Division overflow detected</li>
+<li>Unimplemented order code bits</li>
+</ul>
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>The software engineering process</h2></hgroup><article  id="the-software-engineering-process">
+
+</article></slide><slide class=''><hgroup><h2>Algorithms - scientific calculations</h2></hgroup><article  id="algorithms---scientific-calculations">
+
+<ul class = 'build'>
+<li>Calculus / differential equations</li>
+<li>Statistics / Monte Carlo</li>
+<li>Linear algebra / linear equations / eigensystems</li>
+<li><a href='http://bitsavers.trailing-edge.com/pdf/ias/Planning_and_Coding_of_Problems_for_an_Electronic_Computing_Instrument_Part_II_Volume_II_Apr48.pdf' title=''>&quot;Planning and coding&quot;</a> has a good introduction to the type of computations</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Potential gotcha</h2></hgroup><article  id="potential-gotcha">
+
+<ul class = 'build'>
+<li>Since program orders and data words occupy the same memory, you have to lay them out carefully</li>
+<li>The numbers have to be scaled correctly since there&#39;s no floating point</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Available software</h2></hgroup><article  id="available-software">
+
+<ul class = 'build'>
+<li><a href='http://bitsavers.trailing-edge.com/pdf/univOfIllinoisUrbana/illiac/ILLIAC/Active_Library/X12-235_SADOI.pdf' title=''>Primitive assemblers / loaders</a> to read in instructions and constants</li>
+<li>Data input and output routines (decimal-to-binary and binary-to-decimal)</li>
+<li>Math libraries accessible as closed subroutines</li>
+<li>Interpretive emulations of advanced features (floating point, index registers)</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Documentation</h2></hgroup><article  id="documentation">
+
+<ul class = 'build'>
+<li>Best available now is for ILLIAC: <em>A Guide to ILLIAC Programming</em> <span class="cite">(Fosdick 1961)</span></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Debugging / post-mortem</h2></hgroup><article  id="debugging-post-mortem">
+
+<ul class = 'build'>
+<li>Memory dumps</li>
+<li>Breakpoint stops</li>
+<li>Sometimes lights and switches, single-stepping</li>
+</ul>
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>The emulator</h2></hgroup><article  id="the-emulator">
+
+</article></slide><slide class=''><hgroup><h2>Existing emulators</h2></hgroup><article  id="existing-emulators">
+
+<ul class = 'build'>
+<li><a href='http://simh.trailing-edge.com/' title=''>simh</a>
+
+<ul class = 'build'>
+<li>Open source (<a href='https://github.com/simh/simh' title=''>https://github.com/simh/simh</a>)</li>
+<li>Written in C</li>
+<li>Comprehensive emulation of a wide variety of older systems</li>
+<li>But &#8230;</li>
+<li>IAS machine isn&#39;t one of the older systems :-(</li>
+</ul></li>
+<li><a href='http://www.cs.colby.edu/djskrien/IASSim/' title=''>IASSim</a>
+
+<ul class = 'build'>
+<li>Open source</li>
+<li>Written in Java</li>
+<li>Includes a primitive formula translator</li>
+<li>Not a full bitwise implementation of any order code</li>
+</ul></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>My own emulator</h2></hgroup><article  id="my-own-emulator">
+
+<ul class = 'build'>
+<li>Work in progress</li>
+<li>Currently in R
+
+<ul class = 'build'>
+<li>This is surprisingly difficult</li>
+<li>R doesn&#39;t have a native 64-bit integer type!</li>
+<li>So I&#39;m storing 40-bit words in 64-bit floats</li>
+<li>Using the <code>[binaryLogic](https://cran.rstudio.com/web/packages/binaryLogic/index.html)</code> package to emulate arithmetic unit</li>
+</ul></li>
+<li>Target architecture is ILLIAC I</li>
+<li>Will probably abandon R for Julia
+
+<ul class = 'build'>
+<li>Emulate the minimum viable scientific computer with the most advanced scientific computing language!</li>
+</ul></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>What&#39;s working</h2></hgroup><article  id="whats-working">
+
+<ul class = 'build'>
+<li>Add, subtract, multiply and divide</li>
+<li>Post-mortem dump / display</li>
+</ul>
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>References</h2></hgroup><article  id="references">
+
+</article></slide><slide class=''><hgroup><h2>References</h2></hgroup><article  id="references-1" class="unnumbered smaller">
+
+<div id="refs" class="references">
+<div id="ref-Burks1946">
+<p>Burks, Goldstine, Arthur W., and John von Neumann. 1946. “Preliminary Discussion of the Logical Design of an Electronic Computing Instrument.” <a href='http://grch.com.ar/docs/p1/Apuntes/eng/Logical%20Design%20of%20an%20Electronic%20Computing%20Instrument.pdf' title=''>http://grch.com.ar/docs/p1/Apuntes/eng/Logical%20Design%20of%20an%20Electronic%20Computing%20Instrument.pdf</a>.</p></div>
+
+<div id="ref-Dyson2012">
+<p>Dyson, G. 2012. <em>Turing’s Cathedral: The Origins of the Digital Universe</em>. Vintage Series. Vintage Books.</p></div>
+
+<div id="ref-Fosdick1961">
+<p>Fosdick, Lloyd Dudley. 1961. “A Guide to ILLIAC Programming.” <a href='https://archive.org/details/guidetoilliacpro00fosd' title=''>https://archive.org/details/guidetoilliacpro00fosd</a>.</p></div>
+
+<div id="ref-Goldstine2008">
+<p>Goldstine, H.H. 2008. <em>The Computer from Pascal to von Neumann</em>. The Computer from Pascal to von Neumann. Princeton University Press.</p></div>
+
+<div id="ref-Goldstine1948">
+<p>Goldstine, Herman H., and John von Neumann. 1948. “Planning and Coding of Problems for an Electronic Computing Instrument.” <a href='http://bitsavers.trailing-edge.com/pdf/ias/Planning_and_Coding_of_Problems_for_an_Electronic_Computing_Instrument_Part_II_Volume_II_Apr48.pdf' title=''>http://bitsavers.trailing-edge.com/pdf/ias/Planning_and_Coding_of_Problems_for_an_Electronic_Computing_Instrument_Part_II_Volume_II_Apr48.pdf</a>.</p></div>
+
+<div id="ref-Macrae2000">
+<p>Macrae, Norman. 2000. <em>John von Neumann: The Scientific Genius Who Pioneered the Modern Computer, Game Theory, Nuclear Deterrence, and Much More</em>. American Mathematical Society.</p></div></div></article></slide>
+
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<script src="site_libs/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
+<script src="site_libs/ioslides-13.5.1/js/prettify/prettify.js"></script>
+<script src="site_libs/ioslides-13.5.1/js/prettify/lang-r.js"></script>
+<script src="site_libs/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
+<script src="site_libs/ioslides-13.5.1/js/hammer.js"></script>
+<script src="site_libs/ioslides-13.5.1/js/slide-controller.js"></script>
+<script src="site_libs/ioslides-13.5.1/js/slide-deck.js"></script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<!-- map slide visiblity events into shiny -->
+<script>
+  (function() {
+    if (window.jQuery) {
+       window.jQuery(document).on('slideleave', function(e) {
+         window.jQuery(e.target).trigger('hidden');
+      });
+       window.jQuery(document).on('slideenter', function(e) {
+         window.jQuery(e.target).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

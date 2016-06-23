@@ -1,0 +1,7 @@
+digraph {
+graph [rankdir = LR]
+  'Accumulator' [label = 'Accumulator', shape = 'rectangle', width = 2]
+  'Quotient' [label = 'Quotient', shape = 'rectangle', width = 2]
+  'Accumulator'->'Quotient' [style = 'dashed']
+  'Quotient'->'Accumulator' [style = 'dashed']
+}
