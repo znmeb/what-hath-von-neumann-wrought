@@ -5,10 +5,6 @@ date: "June 23, 2016"
 output:
   revealjs::revealjs_presentation:
     incremental: yes
-  slidy_presentation:
-    incremental: yes
-  ioslides_presentation:
-    incremental: yes
 ---
 # Motivation
 
