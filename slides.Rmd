@@ -8,7 +8,7 @@ output:
     widescreen: true
 bibliography: references.bib
 ---
-# Motivation
+# Introduction
 
 ## Standing on the shoulders of giants
 * "If I have seen farther than others, it is because I was standing on the shoulders of giants." - Isaac Newton 
@@ -34,8 +34,8 @@ bibliography: references.bib
 * Symbolic math
     - [Maxima](https://en.wikipedia.org/wiki/Maxima_(software)) (1998), [Mathematica](https://en.wikipedia.org/wiki/Mathematica) (1998)
 
-## What made all this possible?
-* Transistor logic
+## What made this explosion of computer science possible?
+* Transistor and magnetic recording technology
 * Magnetic core random access memory
 * General-purpose architectures like [System\\360](https://en.wikipedia.org/wiki/IBM_System/360) (1964)
 
@@ -43,7 +43,7 @@ bibliography: references.bib
 * Two kinds of computers - "scientific" and "business"
 * Two languages - FORTRAN and COBOL
 
-## May 25, 1961 - July 20, 1969
+## So let's go back in time to the 1960s - May 25, 1961 - July 20, 1969
 [John F. Kennedy's Moon Speech to Congress - May 25, 1961](https://youtu.be/Kza-iTe2100) <https://youtu.be/Kza-iTe2100>
 
 ## \<rant\>
@@ -55,9 +55,10 @@ bibliography: references.bib
 * Even in 1961, the state of the art was an [IBM 7090](https://en.wikipedia.org/wiki/IBM_7090)
 * \</rant\>
 
-## I've taken away ...
+## As we go back in time, I've taken away ...
 * Your IDEs, version control, the Internet
     - Sorry, you can't Google an error message any more
+* Unix, regular expressions, the shell, pipes, etc.
 * Your programming paradigms
 * But hey, at least you've got FORTRAN and COBOL
 * At least your computer's transistorized
@@ -67,7 +68,7 @@ bibliography: references.bib
 * For the [IBM 704](https://en.wikipedia.org/wiki/IBM_704) ... a vacuum tube machine
 * With floating point hardware and index registers
 * And magnetic core memory
-* I'm not finished
+* But I'm not finished taking stuff away ...
 
 ## April 1952
 * The [IBM 701](https://en.wikipedia.org/wiki/IBM_701) is announced
@@ -81,6 +82,10 @@ bibliography: references.bib
 What Hath Von Neumann (and many others) Wrought?
 
 # The IAS machines
+
+## More of a plan than a full logical design
+* Numerous implementations ... see [IAS machine](https://en.wikipedia.org/wiki/IAS_machine) for a list
+* In what follows I'll mostly refer to [ILLIAC I](https://en.wikipedia.org/wiki/ILLIAC_I) for details
 
 ## Some books for historical perspective
 * _John Von Neumann: The Scientific Genius who Pioneered the Modern Computer, Game Theory, Nuclear Deterrence, and Much More_ [@Macrae2000]
@@ -103,15 +108,22 @@ What Hath Von Neumann (and many others) Wrought?
 * Words were binary, 40 bits each
 * Some implementations had fewer words; for example ILLIAC only had 1024
 
-## A key concept - programs and data occupying the same memory space!
-* A program could act on either data or instructions
+## Key concepts
+* Parallel fetch and store of entire words from memory
+* Random access memory
+* Parallel addition / subtraction
+* Multiplication and division in hardware
+* Programs and data occupied different regions of the same memory
+    - A word could be interpreted as a number, characters, or orders
+    - Programs could modify themselves
+    - Programs could interpret other programs!
 
 ## Arithmetic unit
 * A 40-bit accumulator (A)
 * A 40-bit multiplier-quotient register (Q)
-* A memory register, called R3
-* A complement gate
-* An adder
+* A 40-bit memory data register, called R3
+* A 40-bit complement gate
+* A 40-bit adder
 * We number bits from left to right starting at 0
 * Left-most bit of A is a0 and right-most is a39, etc.
 
@@ -122,11 +134,19 @@ DiagrammeR::grViz("arith_unit.gv")
 
 ## Fractional fixed-point two's-complement arithmetic
 * Most arithmetic assumed numbers were two's-complement fractions
+* Left-most bit is the sign
+    - sign of 1 is less than zero
+    - sign of 0 is greater than or equal to zero
+* Radix point is between bits 0 and 1
+* A sign bit (leftmost bit) and 39 bits of precision = 40 bits
+* About 12 decimal digits of precision!
+
+## Examples
 * Smallest number (hexadecimal): 80000 00000 (-1)
 * Largest number (hexadecimal): 7FFFF FFFFF (+1 - 2 ^ -39)
 * 1/2 = 40000 00000
 * -1/2 = C0000 00000
-* A sign bit (leftmost bit) and 39 bits of precision = 40 bits
+* 2 ^ -39 = 00000 00001
 
 ## Double-precision
 * Some operations treated A and Q as the most and least significant parts of a fraction with a sign and 78 bits of precision
@@ -142,12 +162,12 @@ DiagrammeR::grViz("aq.gv")
 ```
 
 ## Left Shifting = multiply AQ by two
-1. Shift a0 -> bit bucket
-2. Shift a1:a39 -> a0:a38
+1. bit bucket <- a0
+2. Shift a0:a38 <- a1:a39
 3. Leave q0 alone!
-4. Shift q1 -> a39
-5. Shift q2:q39 -> q1:q38
-6. Zero -> q39
+4. Shift a39 <- q1
+5. Shift q1:q38 <- q2:q39 
+6. q39 <- 0
 
 ## Right Shifting = divide AQ by two
 1. Shift q39 -> bit bucket
@@ -161,14 +181,20 @@ DiagrammeR::grViz("aq.gv")
 1. Augend is in A
     * Clear A, or
     * Hold A, or
-    * Set A = 1/2
 2. Addend
     * Memory word or Q to R3, then
 3. Complement gate
     * Pass straight through, or
     * Negate, or
-    * Absolute value
+    * Absolute value, or
+    * Negative absolute value
 3. Form sum in A
+
+## Sample program
+* 0L: Clear-add 100
+* 0R: Hold add 101
+* 1L: Store A 102
+* 1R: Stop
 
 ## Multiplication: initialization
 1. Multiplier is in Q
@@ -179,12 +205,13 @@ DiagrammeR::grViz("aq.gv")
 4. Complement gate
     * Pass straight through, or
     * Negate, or
-    * Absolute value
+    * Absolute value, or
+    * Negative absolute value
 
 ## Multiplication: iteration
 39 steps of
 
-* A <- A + Complement gate
+* If q39 = 1: A <- A + Complement gate
 * Shift AQ right one bit
 
 ## Division
@@ -193,13 +220,15 @@ DiagrammeR::grViz("aq.gv")
 3. 39 steps of
     * subtract R3 from A in the adder
     * if the result is less than zero, set q39 to 0
-    * if the result is greater than or equal to zero, set q39 to 1 and copy the result to A
-    * shift AQ left one place, copying q1 into q0
+    * if the result is greater than or equal to zero, set q39 to 1 _and_ copy the result to A
+    * shift AQ left one place, _copying q1 into q0_
 4. Set q39 to 1 for rounding
+    * The "von Neumann rounding"
 
 ## Control
 * Two 20-bit orders in a 40-bit word
 * The order was usually an 8-bit order code and a 12 bit address
+* Sometimes less than 8 bits of order or 12 bits of address with unused bits
 * A program counter with a left-right indicator
 
 ## Control flow
@@ -209,8 +238,13 @@ DiagrammeR::grViz("aq.gv")
 * Increment the program counter and repeat
 
 ## Control transfers
-* Unconditional: set the program counter to the order address and execute either the left or right order there
-* Conditional: transfer control only if the sign bit of A is positive
+* Unconditional: 
+    * transfer to the left-hand order at address n
+    * transfer to the right-hand order at address n
+* Conditional: 
+    * if the sign of A is positive, transfer to the left-hand order at address n
+    * if the sign of A is positive, transfer to the right-hand order at address n
+    * if the sign of A is negative, don't transfer
 
 ## Stops
 * Control transfers could be coded to stop before transfer
@@ -220,22 +254,24 @@ DiagrammeR::grViz("aq.gv")
 
 # The software engineering process
 
-## Algorithms
+## Algorithms - scientific calculations
 * Calculus / differential equations
 * Statistics / Monte Carlo
 * Linear algebra / linear equations / eigensystems
 * ["Planning and coding"](http://bitsavers.trailing-edge.com/pdf/ias/Planning_and_Coding_of_Problems_for_an_Electronic_Computing_Instrument_Part_II_Volume_II_Apr48.pdf) has a good introduction to the type of computations
 
-## Memory layout
-* Since program orders and data words occupy the same memory, you have to lay them out ahead of time
+## Potential gotcha
+* Since program orders and data words occupy the same memory, you have to lay them out carefully
+* The numbers have to be scaled correctly since there's no floating point
 
 ## Available software
-* [Primitive assemblers / loaders](http://bitsavers.trailing-edge.com/pdf/univOfIllinoisUrbana/illiac/ILLIAC/Active_Library/X12-235_SADOI.pdf) to read in instructions
+* [Primitive assemblers / loaders](http://bitsavers.trailing-edge.com/pdf/univOfIllinoisUrbana/illiac/ILLIAC/Active_Library/X12-235_SADOI.pdf) to read in instructions and constants
 * Data input and output routines (decimal-to-binary and binary-to-decimal)
 * Math libraries accessible as closed subroutines
+* Interpretive emulations of advanced features (floating point, index registers)
 
 ## Documentation
-* Best available now is for ILLIAC: _A Guide to ILLIAC Programming_ [@Fosdick1961] 
+* Best available now is for ILLIAC: _A Guide to ILLIAC Programming_ [@Fosdick1961]
 
 ## Debugging / post-mortem
 * Memory dumps
@@ -248,11 +284,14 @@ DiagrammeR::grViz("aq.gv")
 * [simh](http://simh.trailing-edge.com/)
     - Open source (<https://github.com/simh/simh>)
     - Written in C
-    - Doesn't have any IAS machines 
-* [IASSim]()
-    - Open source (http://www.cs.colby.edu/djskrien/IASSim/)
+    - Comprehensive emulation of a wide variety of older systems 
+    - But ...
+    - IAS machine isn't one of the older systems :-(
+* [IASSim](http://www.cs.colby.edu/djskrien/IASSim/)
+    - Open source
     - Written in Java
     - Includes a primitive formula translator
+    - Not a full bitwise implementation of any order code
 
 ## My own emulator
 * Work in progress
@@ -260,12 +299,13 @@ DiagrammeR::grViz("aq.gv")
     - This is surprisingly difficult
     - R doesn't have a native 64-bit integer type!
     - So I'm storing 40-bit words in 64-bit floats
-    - Using the `binaryLogic` package to emulate arithmetic unit
-* Target architecture is ILLIAC (best documentation)
+    - Using the `[binaryLogic](https://cran.rstudio.com/web/packages/binaryLogic/index.html)` package to emulate arithmetic unit
+* Target architecture is ILLIAC I
 * Will probably abandon R for Julia
+    - Emulate the minimum viable scientific computer with the most advanced scientific computing language!
 
 ## What's working
-* Multiply and divide
+* Add, subtract, multiply and divide
 * Post-mortem dump / display
 
 # References
